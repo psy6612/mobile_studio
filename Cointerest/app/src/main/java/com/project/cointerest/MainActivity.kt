@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         println("체크00000")
         JsonMake()
+
     }
 
     fun JsonMake(){
