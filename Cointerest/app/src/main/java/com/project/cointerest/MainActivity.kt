@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 //        my_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 //        my_recycler_view.setHasFixedSize(true)
 
-        println("체크00000")
+        println("체크000000")
         JsonMake()
 
     }
@@ -43,8 +43,7 @@ class MainActivity : AppCompatActivity() {
                     println("체크22222")
                     //val jsonArray = coinInfo.optJSONArray("trade_price")
 
-                    var i = 0;
-                    var tempStr = ""
+                    var i = 0
                     while(i< coinInfo.length()){
                         val jsonObject = coinInfo.getJSONObject(i)
                         val market_name = jsonObject.getString("market")
