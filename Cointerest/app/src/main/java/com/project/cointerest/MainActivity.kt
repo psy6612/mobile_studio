@@ -10,6 +10,9 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
+import android.widget.RelativeLayout
+import kotlinx.android.synthetic.main.activity_main.*
+import android.view.View
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,11 +24,31 @@ class MainActivity : AppCompatActivity() {
 //        my_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
 //        my_recycler_view.setHasFixedSize(true)
 
+        configureBottomNavigation()
+
         println("체크000000")
         JsonMake()
 
     }
+    private fun configureBottomNavigation() {
+        vp_ac_main_frag_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 5)
 
+        tl_ac_main_bottom_menu.setupWithViewPager(vp_ac_main_frag_pager)
+
+        val bottomNaviLayout: View =
+            this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)
+
+        tl_ac_main_bottom_menu.getTabAt(0)!!.customView =
+            bottomNaviLayout.findViewById(R.id.tab_interesting_coin) as RelativeLayout
+        tl_ac_main_bottom_menu.getTabAt(1)!!.customView =
+            bottomNaviLayout.findViewById(R.id.tab_search) as RelativeLayout
+        tl_ac_main_bottom_menu.getTabAt(2)!!.customView =
+            bottomNaviLayout.findViewById(R.id.tab_market) as RelativeLayout
+        tl_ac_main_bottom_menu.getTabAt(3)!!.customView =
+            bottomNaviLayout.findViewById(R.id.tab_chat) as RelativeLayout
+        tl_ac_main_bottom_menu.getTabAt(4)!!.customView =
+            bottomNaviLayout.findViewById(R.id.tab_setting) as RelativeLayout
+    }
     fun JsonMake(){
         println("데어터를 가져 오는 중...")
         val url = "http://3.35.174.63/market.php"
