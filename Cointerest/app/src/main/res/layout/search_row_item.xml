@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_row_item_layout"
+    android:orientation="horizontal"
+    android:padding="8dp"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
-    android:layout_marginLeft="@dimen/margin_medium"
-    android:layout_marginRight="@dimen/margin_medium"
-    android:gravity="center_vertical">
+    android:layout_height="@dimen/list_item_height">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/search_row_item_coin_name"
         android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="8"
+        android:gravity="center|start"
+        tools:text="@tools:sample/lorem[4:10]"
+        android:textSize="20sp" />
+
+    <CheckBox
+        android:id="@+id/search_row_item_checkbox"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
-        android:text="@string/element_text"/>
-</FrameLayout>
+        android:layout_weight="1"
+        />
+
+</LinearLayout>

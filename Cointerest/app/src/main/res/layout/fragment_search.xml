@@ -72,7 +72,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_switch_layout"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:itemCount="12"
+            tools:listitem="@layout/search_row_item" />
 
         <Button
             android:id="@+id/search_add_button"
