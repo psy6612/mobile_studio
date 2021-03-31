@@ -46,11 +46,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
 
+                android:checked="true"
                 android:fontFamily="@font/notosanskrmedium"
                 android:freezesText="false"
                 android:includeFontPadding="true"
                 android:text="@string/krw_market"
                 android:textAllCaps="false"
+                android:textColorHighlight="#009688"
                 android:textIsSelectable="false"
                 app:showText="false" />
 
@@ -59,8 +61,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:checked="true"
                 android:fontFamily="@font/notosanskrmedium"
-                android:text="@string/btc_market" />
+                android:text="@string/btc_market"
+                android:textColorHighlight="#009688" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
