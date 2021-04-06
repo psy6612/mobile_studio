@@ -9,12 +9,13 @@ import okhttp3.*
 import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import com.project.cointerest.Adapter.SearchFragmentRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
 class MainActivity : AppCompatActivity() {
-    //val cl = arrayListOf<CoinData>(CoinData("1","","2","3"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +25,15 @@ class MainActivity : AppCompatActivity() {
 //        my_recycler_view.setHasFixedSize(true)
       //  val mAdapter = SearchFragmentRecyclerAdapter(this, cl)
       //  search_content_view.adapter = mAdapter
-
+        println("GO")
         configureBottomNavigation()
 
 
+
+        //btn_click()
+
     }
+
     private fun configureBottomNavigation() {
         vp_ac_main_frag_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 5)
 
@@ -36,6 +41,8 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNaviLayout: View =
             this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)
+
+
 
         tl_ac_main_bottom_menu.getTabAt(0)!!.customView =
             bottomNaviLayout.findViewById(R.id.tab_interesting_coin) as RelativeLayout
@@ -47,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             bottomNaviLayout.findViewById(R.id.tab_chat) as RelativeLayout
         tl_ac_main_bottom_menu.getTabAt(4)!!.customView =
             bottomNaviLayout.findViewById(R.id.tab_setting) as RelativeLayout
+
     }
 
 }
