@@ -2,9 +2,13 @@ package com.project.cointerest.Fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +27,11 @@ class searchFragment : Fragment() {
     var coin_list_KRW = arrayListOf<CoinData>()
     var coin_list_BTC = arrayListOf<CoinData>()
     var coin_list_ALL = arrayListOf<CoinData>()
+    var coin_list_NULL = arrayListOf<CoinData>()
+
+    var state = "ALL"
+
+
     lateinit var My_recyclerView : RecyclerView
 
     fun JsonMake(){
@@ -32,6 +41,7 @@ class searchFragment : Fragment() {
         val url = "https://api.upbit.com/v1/market/all"
         val request = Request.Builder().url(url).build()
         val client = OkHttpClient()
+        //coin_list_NULL.add(CoinData("", "", "", ""))
 
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
@@ -93,22 +103,56 @@ class searchFragment : Fragment() {
 
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
+
+
+        search_searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                when(state){
+                    "KRW" ->  {var mAdapter = My_recyclerView?.let { SearchFragmentRecyclerAdapter(requireContext(), coin_list_KRW)}
+                        mAdapter?.filter?.filter(newText) }
+                    "BTC" ->{var mAdapter = My_recyclerView?.let { SearchFragmentRecyclerAdapter(requireContext(), coin_list_BTC) }
+                        mAdapter?.filter?.filter(newText)}
+                    "ALL" ->{var mAdapter = My_recyclerView?.let { SearchFragmentRecyclerAdapter(requireContext(), coin_list_ALL) }
+                        mAdapter?.filter?.filter(newText) }
+                    else ->{var mAdapter = My_recyclerView?.let { SearchFragmentRecyclerAdapter(requireContext(), coin_list_NULL) }
+                        mAdapter?.filter?.filter(newText) }
+                }
+                return true
+            }
+        })
+
+
 
         search_KRW_switch.setOnClickListener { view ->
 
             //눌렀는데 지만 선택될때
             if(search_KRW_switch.isChecked && !search_BTC_switch.isChecked){
+                state = "KRW"
                 My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_KRW)
+
                 println("KRW_SELECTED")
             }
             //눌렀는데 지만 선택 안됐을때
             else if(!search_KRW_switch.isChecked && search_BTC_switch.isChecked){
+                state = "BTC"
                 My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_BTC)
+            }
+            //둘다 선택 안됐을때
+            else if(!search_KRW_switch.isChecked && !search_BTC_switch.isChecked){
+                state = ""
+                My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_NULL)
             }
             //눌렀는데 둘다 선택됐을때
             else{
+                state = "ALL"
                 My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_ALL)
             }
         }
@@ -117,15 +161,23 @@ class searchFragment : Fragment() {
 
             //눌렀는데 지만 선택될때
             if(search_BTC_switch.isChecked && !search_KRW_switch.isChecked){
+                state = "BTC"
                 My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_BTC)
                 println("BTC_SELECTED")
             }
             //눌렀는데 지만 선택 안됐을때
             else if(search_KRW_switch.isChecked && !search_BTC_switch.isChecked){
+                state = "KRW"
                 My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_KRW)
+            }
+            //둘다 선택 안됐을때
+            else if(!search_KRW_switch.isChecked && !search_BTC_switch.isChecked){
+                state = ""
+                My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_NULL)
             }
             //눌렀는데 둘다 선택됐을때
             else{
+                state = "ALL"
                 My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_ALL)
             }
         }
