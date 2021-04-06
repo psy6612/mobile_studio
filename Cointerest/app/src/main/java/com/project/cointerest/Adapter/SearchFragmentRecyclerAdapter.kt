@@ -37,7 +37,8 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
                 } else {
                     var filteringList = ArrayList<CoinData>()
                     for (item in unFilteredList) {
-                        if (item.kor_name == charString) {
+                        if (item.kor_name == charString ||
+                                item.symbol.toLowerCase() == charString.toLowerCase()) {
                             filteringList.add(item)
                             println("찾았다!")
                             println(item.kor_name)
@@ -49,7 +50,6 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
                 val filterResults = FilterResults()
                 filterResults.values = filteredList
 
-                notifyDataSetChanged()
                 return filterResults
             }
 
@@ -57,8 +57,9 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
                 filteredList = results?.values as ArrayList<CoinData>
                 println("result")
                 println(filteredList.size)
-                notifyDataSetChanged()
 
+                //수정이 안됨
+                notifyDataSetChanged()
             }
 
         }
@@ -69,7 +70,6 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
         val view = LayoutInflater.from(context).inflate(R.layout.recycler_view_item_1, parent, false)
         return Holder(view)
     }
-
 
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
@@ -98,7 +98,6 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
         println("check@@@!!")
         println(filteredList.size)
         holder?.bind(filteredList[position], context)
-
     }
 
 

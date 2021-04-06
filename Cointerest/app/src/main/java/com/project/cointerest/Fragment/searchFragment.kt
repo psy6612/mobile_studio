@@ -69,7 +69,9 @@ class searchFragment : Fragment() {
                         } else if (arr[0] == "BTC") {
                             coin_list_BTC.add(CoinData(korean_name, "", arr[1], arr[0]))
                         }
-                        coin_list_ALL.add(CoinData(korean_name, "", arr[1], arr[0]))
+                        if(arr[0] != "USDT") {
+                            coin_list_ALL.add(CoinData(korean_name, "", arr[1], arr[0]))
+                        }
                         i++
                     }
                 } catch (e: JSONException) {
