@@ -21,7 +21,7 @@
             android:id="@+id/search_searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="5dp"
             android:minWidth="48dp"
             app:layout_constraintBottom_toTopOf="@+id/search_switch_layout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,6 @@
             app:layout_constraintBottom_toTopOf="@+id/search_content_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_searchView"
             app:layout_constraintVertical_chainStyle="packed">
 
             <com.google.android.material.switchmaterial.SwitchMaterial
@@ -49,7 +48,7 @@
 
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:checked="false"
+                android:checked="true"
                 android:fontFamily="@font/notosanskrmedium"
                 android:freezesText="false"
                 android:includeFontPadding="true"
@@ -65,22 +64,23 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:checked="true"
+                android:fontFamily="@font/notosanskrmedium"
                 android:freezesText="false"
                 android:includeFontPadding="true"
-                android:fontFamily="@font/notosanskrmedium"
                 android:text="@string/btc_market"
                 android:textAllCaps="false"
-                android:textIsSelectable="false"
-                />
+                android:textIsSelectable="false" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_content_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="399dp"
+            android:layout_marginTop="15dp"
             android:minWidth="48dp"
             app:chainUseRtl="false"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_switch_layout"
             app:layout_constraintVertical_chainStyle="spread_inside"
@@ -91,15 +91,13 @@
             android:id="@+id/search_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="64dp"
             android:fontFamily="@font/notosanskrbold"
             android:text="@string/add_interest_coin"
-            app:layout_constraintBottom_toTopOf="@id/search_space_2"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/search_cancel_button"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_space_1" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/search_cancel_button"
@@ -113,12 +111,12 @@
         <Space
             android:id="@+id/search_space_1"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="5dp"
             app:layout_constraintBottom_toTopOf="@+id/search_add_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_content_view" />
+            app:layout_constraintTop_toBottomOf="@id/search_content_view" />
 
         <Space
             android:id="@+id/search_space_2"
