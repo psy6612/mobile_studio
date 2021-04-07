@@ -66,12 +66,12 @@ class searchFragment : Fragment() {
                         println("체크메이드")
                         // println(coin_list[i].kor_name)
                         if (arr[0] == "KRW") {
-                            coin_list_KRW.add(CoinData(korean_name, "", arr[1], arr[0]))
+                            coin_list_KRW.add(CoinData(korean_name, arr[1], arr[1], arr[0]))
                         } else if (arr[0] == "BTC") {
-                            coin_list_BTC.add(CoinData(korean_name, "", arr[1], arr[0]))
+                            coin_list_BTC.add(CoinData(korean_name, arr[1], arr[1], arr[0]))
                         }
                         if(arr[0] != "USDT") {
-                            coin_list_ALL.add(CoinData(korean_name, "", arr[1], arr[0]))
+                            coin_list_ALL.add(CoinData(korean_name, arr[1], arr[1], arr[0]))
                         }
                         i++
                     }

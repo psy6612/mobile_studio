@@ -1,8 +1,13 @@
 package com.project.cointerest.Adapter
 
+//import com.project.cointerest.Fragment.CoinList
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
+import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +15,12 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.CoinData
-import com.project.cointerest.Fragment.searchFragment
-//import com.project.cointerest.Fragment.CoinList
 import com.project.cointerest.R
 import kotlinx.android.synthetic.main.fragment_search.view.*
+import java.net.URL
 
 
-
-class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayList<CoinData>) :
+class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayList<CoinData>) :
         RecyclerView.Adapter<SearchFragmentRecyclerAdapter.Holder>(), Filterable {
 
     val unFilteredList = coin_list // 필터 전
@@ -74,7 +77,6 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
                 //이거했는데 수정반영이 안됨
                 notifyDataSetChanged()
             }
-
         }
     }
 
@@ -94,16 +96,23 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
         fun bind(coin: CoinData, context: Context) {
 
             if (coin.coin_image != "") {
-                val resourceId = context.resources.getIdentifier(coin.coin_image, "drawable", context.packageName)
-                C_image?.setImageResource(resourceId)
+
+                println("이미지 체크메이드")
+
+                //이미지 다이나믹하게 호출
+                var image_task: URLtoBitmapTask = URLtoBitmapTask()
+                image_task = URLtoBitmapTask().apply {
+                    url = URL("https://static.upbit.com/logos/${coin.coin_image}.png")
+                }
+                var bitmap: Bitmap = image_task.execute().get()
+                C_image?.setImageBitmap(bitmap)
+
             } else {
                 C_image?.setImageResource(R.mipmap.ic_launcher)
             }
             C_kor?.text = coin.kor_name
             C_symbol?.text = coin.symbol
             C_market?.text = coin.market
-
-            //itemView?.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.parseColor("#D8D8D8"))
 
         }
     }
@@ -165,12 +174,22 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
                 println("${coin.kor_name} - ${coin.market}")
             }
             println("#################")
-
-
         }
+    }
+}
+
+class URLtoBitmapTask() : AsyncTask<Void, Void, Bitmap>() {
+    //액티비티에서 설정해줌
+    lateinit var url: URL
+    override fun doInBackground(vararg params: Void?): Bitmap {
+        val bitmap = BitmapFactory.decodeStream(url.openStream())
+        return bitmap
+    }
+    override fun onPreExecute() {
+        super.onPreExecute()
 
     }
-
-
-
+    override fun onPostExecute(result: Bitmap) {
+        super.onPostExecute(result)
+    }
 }
