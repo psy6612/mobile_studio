@@ -29,7 +29,7 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
     //선택한 아이템리스트
     var selectedList = ArrayList<CoinData>()
 
-    //클릭 인터페이스 정의
+    //클릭 인터페이스  정의
     interface ItemClickListener {
         fun onClick(view: View, position: Int)
     }
@@ -113,7 +113,6 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
             C_kor?.text = coin.kor_name
             C_symbol?.text = coin.symbol
             C_market?.text = coin.market
-
         }
     }
 
