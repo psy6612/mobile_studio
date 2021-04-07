@@ -2,10 +2,12 @@ package com.project.cointerest.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.CoinData
 import com.project.cointerest.Fragment.searchFragment
@@ -101,6 +103,8 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
             C_symbol?.text = coin.symbol
             C_market?.text = coin.market
 
+            //itemView?.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.parseColor("#D8D8D8"))
+
         }
     }
 
@@ -135,7 +139,10 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
                     for(Ncoin in selectedList){
                         println("${Ncoin.kor_name} - ${Ncoin.market}")
                     }
-                    println("#################")
+                    println("#################");
+
+                    //선택해제시 배경색 해제
+                    holder.itemView.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.WHITE)
 
                     duplicateCheck = 1
                     break
@@ -147,6 +154,9 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list:ArrayLis
             if(duplicateCheck == 0){
                 println("추가!!")
                 selectedList.add(filteredList[position])
+
+                //선택시 배경색 삽입
+                holder.itemView.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.parseColor("#D8D8D8"))
             }
 
 
