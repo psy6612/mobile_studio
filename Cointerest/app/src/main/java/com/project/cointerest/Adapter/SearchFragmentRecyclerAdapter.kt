@@ -150,7 +150,7 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
                     println("#################");
 
                     //선택해제시 배경색 해제
-                    holder.itemView.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.WHITE)
+                    // holder.itemView.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.WHITE)
 
                     duplicateCheck = 1
                     break
@@ -164,7 +164,7 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
                 selectedList.add(filteredList[position])
 
                 //선택시 배경색 삽입
-                holder.itemView.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.parseColor("#D8D8D8"))
+                // holder.itemView.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.parseColor("#D8D8D8"))
             }
 
 

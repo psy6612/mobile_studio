@@ -3,27 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_row_item_layout"
-    android:orientation="horizontal"
-    android:padding="8dp"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height">
+    android:layout_height="@dimen/search_list_item_height"
+    android:maxHeight="@dimen/search_list_item_height"
+    android:orientation="horizontal"
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/search_row_item_coin_name"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_weight="8"
         android:gravity="center|start"
-        tools:text="@tools:sample/lorem[4:10]"
-        android:textSize="20sp" />
+        android:maxWidth="100dp"
+        android:textSize="20sp"
+        tools:maxLength="30"
+        tools:text="@tools:sample/lorem[4:10]" />
 
     <CheckBox
         android:id="@+id/search_row_item_checkbox"
-        android:layout_width="35dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
         android:layout_weight="1"
-        />
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:text="@null" />
 
 </LinearLayout>

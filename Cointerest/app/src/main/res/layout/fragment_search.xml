@@ -33,6 +33,8 @@
             android:id="@+id/search_switch_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/search_content_view"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,15 +46,15 @@
                 android:id="@+id/search_KRW_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
 
-                android:checked="true"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:checked="false"
                 android:fontFamily="@font/notosanskrmedium"
                 android:freezesText="false"
                 android:includeFontPadding="true"
                 android:text="@string/krw_market"
                 android:textAllCaps="false"
-                android:textColorHighlight="#009688"
                 android:textIsSelectable="false"
                 app:showText="false" />
 
@@ -60,11 +62,16 @@
                 android:id="@+id/search_BTC_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:checked="true"
+                android:freezesText="false"
+                android:includeFontPadding="true"
                 android:fontFamily="@font/notosanskrmedium"
                 android:text="@string/btc_market"
-                android:textColorHighlight="#009688" />
+                android:textAllCaps="false"
+                android:textIsSelectable="false"
+                />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -77,7 +84,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_switch_layout"
             app:layout_constraintVertical_chainStyle="spread_inside"
-            tools:itemCount="12"
+            tools:itemCount="8"
             tools:listitem="@layout/search_row_item" />
 
         <Button
@@ -86,7 +93,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="64dp"
-            android:layout_marginRight="64dp"
             android:fontFamily="@font/notosanskrbold"
             android:text="@string/add_interest_coin"
             app:layout_constraintBottom_toTopOf="@id/search_space_2"
