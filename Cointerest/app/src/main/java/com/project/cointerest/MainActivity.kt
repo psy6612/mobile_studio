@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
       //  val mAdapter = SearchFragmentRecyclerAdapter(this, cl)
       //  search_content_view.adapter = mAdapter
         println("GO")
-        configureBottomNavigation()
+        // configureBottomNavigation()
 
 
 
