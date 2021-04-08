@@ -24,18 +24,19 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
         RecyclerView.Adapter<SearchFragmentRecyclerAdapter.Holder>(), Filterable {
 
     val unFilteredList = coin_list // 필터 전
-    var filteredList = coin_list // 필터 후
+    private var filteredList = coin_list // 필터 후
 
     //선택한 아이템리스트
     var selectedList = ArrayList<CoinData>()
 
-    //클릭 인터페이스  정의
+/*    //클릭 인터페이스  정의
     interface ItemClickListener {
         fun onClick(view: View, position: Int)
     }
 
+
     //클릭리스너 선언
-    private lateinit var itemClickListner: ItemClickListener
+    private lateinit var itemClickListner: ItemClickListener*/
 
 
     override fun getItemCount(): Int = filteredList.size
@@ -46,7 +47,7 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
 
                 val charString = constraint.toString()
                 println(charString)
-                filteredList = if (charString.isEmpty()) {
+                val filterList = if (charString.isEmpty()) {
                     println("비엇음")
                     unFilteredList
 
@@ -64,7 +65,7 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
 
                 }
                 val filterResults = FilterResults()
-                filterResults.values = filteredList
+                filterResults.values = filterList
 
                 return filterResults
             }
@@ -122,8 +123,24 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
         //여기에는 데이터셋 수정이 적용 안됐음
         println("check@@@!!")
         println(filteredList.size)
+        println(this)
 
         holder?.bind(filteredList[position], context)
+
+
+        /*var cancel_btn =holder.itemView.findViewById<Button>(R.id.search_cancel_button)
+
+        cancel_btn.setOnClickListener{
+            println("선택 취소")
+            selectedList.clear()
+
+            println("##선택된 코인들###")
+            for(coin in selectedList){
+                println("${coin.kor_name} - ${coin.market}")
+            }
+            println("#################");
+        }*/
+
 
         holder.itemView.setOnClickListener {
             var duplicateCheck = 0
