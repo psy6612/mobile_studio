@@ -4,49 +4,50 @@ package com.project.cointerest
 //import androidx.recyclerview.widget.LinearLayoutManager
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import okhttp3.*
-import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.activity_main.*
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
-import com.project.cointerest.Adapter.SearchFragmentRecyclerAdapter
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.project.cointerest.Fragment.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        my_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-//        my_recycler_view.setHasFixedSize(true)
-      //  val mAdapter = SearchFragmentRecyclerAdapter(this, cl)
-      //  search_content_view.adapter = mAdapter
         println("GO")
-        configureBottomNavigation()
+        tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
+        supportFragmentManager.beginTransaction().add(R.id.vp_ac_main_frag_pager, coinFragment()).commit()
     }
 
-    private fun configureBottomNavigation() {
-        vp_ac_main_frag_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 5)
-
-        tl_ac_main_bottom_menu.setupWithViewPager(vp_ac_main_frag_pager)
-
-        val bottomNaviLayout: View =
-            this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)
-
-
-        tl_ac_main_bottom_menu.getTabAt(0)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_interesting_coin) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(1)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_search) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(2)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_market) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(3)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_chat) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(4)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_setting) as RelativeLayout
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.coinItem -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager , coinFragment()).commitAllowingStateLoss()
+                return true
+            }
+            R.id.searchItem -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, searchFragment()).commitAllowingStateLoss()
+                return true
+            }
+            R.id.marketItem -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, marketFragment()).commitAllowingStateLoss()
+                return true
+            }
+            R.id.chatItem -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, chatFragment()).commitAllowingStateLoss()
+                return true
+            }
+            R.id.settingItem -> {
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, settingFragment()).commitAllowingStateLoss()
+                return true
+            }
+        }
+        return false
     }
+
 }
