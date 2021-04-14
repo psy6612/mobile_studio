@@ -18,11 +18,15 @@ import kotlinx.android.synthetic.main.fragment_coin.view.*
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.CoinData
 import com.project.cointerest.R
+import okhttp3.*
+import org.json.JSONArray
+import org.json.JSONException
+import java.io.IOException
 import java.net.URL
+import kotlin.concurrent.timer
 
 class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>):
         RecyclerView.Adapter<CoinContentAdapter.Holder>() {
-
 
     //선택한 아이템리스트
     //var selectedList = ArrayList<CoinData>()
@@ -45,6 +49,8 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
     }
 
 
+
+
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
         val C_image = itemView?.findViewById<ImageView>(R.id.coin_row_item_image)
         val C_kor = itemView?.findViewById<TextView>(R.id.coin_row_item_name)
@@ -52,6 +58,8 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
         //val C_market = itemView?.findViewById<TextView>(R.id.Market)
 
         //var btn = itemView?.findViewById<Button>(R.id.search_add_button)
+
+
 
         fun bind(coin: CoinData, context: Context) {
             println("버튼값!!")
@@ -93,20 +101,7 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
     }
 
 }
-/*
-class URLtoBitmapTask() : AsyncTask<Void, Void, Bitmap>() {
-    //액티비티에서 설정해줌
-    lateinit var url: URL
-    override fun doInBackground(vararg params: Void?): Bitmap {
-        val bitmap = BitmapFactory.decodeStream(url.openStream())
-        return bitmap
-    }
-    override fun onPreExecute() {
-        super.onPreExecute()
 
-    }
-    override fun onPostExecute(result: Bitmap) {
-        super.onPostExecute(result)
-    }
-}
-*/
+
+
+
