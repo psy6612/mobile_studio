@@ -6,7 +6,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.project.cointerest.Fragment.*
 
 class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : Int) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
     override fun getItem(position: Int): Fragment {
+
         when(position){
             0 -> return coinFragment()
             1 -> return searchFragment()

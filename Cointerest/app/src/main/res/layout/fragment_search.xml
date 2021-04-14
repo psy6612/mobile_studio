@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:minWidth="48dp"
+            android:queryHint="ex) btc, 비트코인"
             app:layout_constraintBottom_toTopOf="@+id/search_switch_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

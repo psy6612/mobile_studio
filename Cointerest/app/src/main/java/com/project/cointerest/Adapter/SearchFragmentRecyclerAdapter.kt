@@ -21,14 +21,17 @@ import kotlinx.android.synthetic.main.fragment_search.view.*
 import java.net.URL
 
 
-class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayList<CoinData>) :
+class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayList<CoinData>,  var selected:ArrayList<CoinData>) :
         RecyclerView.Adapter<SearchFragmentRecyclerAdapter.Holder>() {
+
 
     val unFilteredList = coin_list // 필터 전
     private var filteredList = coin_list // 필터 후
 
     //선택한 아이템리스트
     var selectedList = ArrayList<CoinData>()
+    
+   // var btn : Button = findViewById(R.id.search_searchView)
 
 /*    //클릭 인터페이스  정의
     interface ItemClickListener {
@@ -52,9 +55,16 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
         val C_symbol = itemView?.findViewById<TextView>(R.id.Symbol)
         val C_market = itemView?.findViewById<TextView>(R.id.Market)
 
+        //var btn = itemView?.findViewById<Button>(R.id.search_add_button)
+
 
 
         fun bind(coin: CoinData, context: Context) {
+            println("버튼값")
+/*            println(btn)
+            btn?.setOnClickListener{
+                println("어댑터 버튼")
+            }*/
 
             if (coin.coin_image != "") {
 
@@ -84,10 +94,12 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
         //println("check@@@!!")
         //println(filteredList.size)
         //println(this)
+        //val btn = context.findViewById(R.id.search_add_button)
 
         holder?.bind(filteredList[position], context)
 
         var cancel_btn =holder.itemView.findViewById<Button>(R.id.search_cancel_button)
+
         //println("취소버튼")
         //println(cancel_btn)
 /*        cancel_btn.setOnClickListener{
@@ -116,6 +128,7 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
                         && (filteredList[position].market == coin.market)){
 
                     selectedList.remove(selectedList[idx])
+                    selected.remove(selected[idx])
 
                     //println("${idx}번째 인덱스")
                     println("${filteredList[position].kor_name} 선택해제")
@@ -138,8 +151,9 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
             //리스트 중간에 삭제됐던거 다시 추가하면 튕김
             if(duplicateCheck == 0){
                 println("추가!!")
-                selectedList.add(filteredList[position])
 
+                selectedList.add(filteredList[position])
+                selected.add(filteredList[position])
                 //선택시 배경색 삽입
                 holder.itemView.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.parseColor("#D8D8D8"))
             }
