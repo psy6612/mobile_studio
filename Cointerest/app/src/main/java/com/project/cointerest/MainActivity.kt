@@ -4,20 +4,16 @@ package com.project.cointerest
 //import androidx.recyclerview.widget.LinearLayoutManager
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import okhttp3.*
+import kotlinx.android.synthetic.main.activity_main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.cointerest.Fragment.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_search.*
-import okhttp3.*
 
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,56 +27,27 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.coinItem -> {
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.vp_ac_main_frag_pager,
-                    coinFragment()
-                ).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager , coinFragment()).commitAllowingStateLoss()
                 return true
             }
             R.id.searchItem -> {
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.vp_ac_main_frag_pager,
-                    searchFragment()
-                ).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, searchFragment()).commitAllowingStateLoss()
                 return true
             }
             R.id.marketItem -> {
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.vp_ac_main_frag_pager,
-                    marketFragment()
-                ).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, marketFragment()).commitAllowingStateLoss()
                 return true
             }
             R.id.chatItem -> {
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.vp_ac_main_frag_pager,
-                    chatFragment()
-                ).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, chatFragment()).commitAllowingStateLoss()
                 return true
             }
             R.id.settingItem -> {
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.vp_ac_main_frag_pager,
-                    settingFragment()
-                ).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, settingFragment()).commitAllowingStateLoss()
                 return true
             }
         }
         return false
-    }
-
-    fun setDataFragment(fragment: Fragment, data: ArrayList<String>){
-        val bundle = Bundle()
-        bundle.putStringArrayList("data", data)
-
-        fragment.arguments = bundle
-        setFragment(fragment)
-    }
-
-    fun setFragment(fragment: Fragment){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.coin_layout, fragment)
-        transaction.commit()
     }
 
 }
