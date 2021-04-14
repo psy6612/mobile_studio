@@ -7,71 +7,45 @@
     <!--thin-->
     <font
         android:font="@font/notosanskrthin"
-        android:fontStyle="normal"
-        android:fontWeight="100"
         app:font="@font/notosanskrthin"
-        app:fontStyle="normal"
-        app:fontWeight="125"
         tools:ignore="UnusedAttribute"/>
 
     <!--light-->
     <font
         android:font="@font/notosanskrlight"
-        android:fontStyle="normal"
-        android:fontWeight="200"
         app:font="@font/notosanskrlight"
-        app:fontStyle="normal"
-        app:fontWeight="250"
         tools:ignore="UnusedAttribute"/>
 
     <!--demilight-->
     <font
         android:font="@font/notosanskrdemilight"
-        android:fontStyle="normal"
-        android:fontWeight="250"
         app:font="@font/notosanskrdemilight"
-        app:fontStyle="normal"
-        app:fontWeight="350"
         tools:ignore="UnusedAttribute"/>
 
     <!--regular-->
     <font
         android:font="@font/notosanskrregular"
-        android:fontStyle="normal"
-        android:fontWeight="400"
         app:font="@font/notosanskrregular"
-        app:fontStyle="normal"
-        app:fontWeight="500"
         tools:ignore="UnusedAttribute"/>
 
     <!--medium-->
     <font
         android:font="@font/notosanskrmedium"
         android:fontStyle="normal"
-        android:fontWeight="600"
         app:font="@font/notosanskrmedium"
         app:fontStyle="normal"
-        app:fontWeight="750"
         tools:ignore="UnusedAttribute"/>
 
     <!--bold-->
     <font
         android:font="@font/notosanskrbold"
-        android:fontStyle="normal"
-        android:fontWeight="700"
         app:font="@font/notosanskrbold"
-        app:fontStyle="normal"
-        app:fontWeight="1000"
         tools:ignore="UnusedAttribute"/>
 
     <!--black-->
     <font
         android:font="@font/notosanskrblack"
-        android:fontStyle="normal"
-        android:fontWeight="800"
         app:font="@font/notosanskrblack"
-        app:fontStyle="normal"
-        app:fontWeight="1100"
         tools:ignore="UnusedAttribute"/>
 
 </font-family>
