@@ -114,10 +114,14 @@ class searchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        search_add_button.setOnClickListener {
-            println("클릭")
-            My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_ALL)
-
+        search_cancel_button.setOnClickListener {
+            println("취소버튼 클릭")
+            when (state) {
+                "KRW" -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_KRW) }
+                "BTC" -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_BTC) }
+                "ALL" -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_ALL) }
+                else -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_NULL) }
+            }
         }
 
 
