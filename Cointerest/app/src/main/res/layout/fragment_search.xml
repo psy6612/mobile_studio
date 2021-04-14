@@ -76,7 +76,7 @@
             android:id="@+id/search_content_view"
             android:layout_width="match_parent"
             android:layout_height="399dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:minWidth="48dp"
             app:chainUseRtl="false"
             app:layout_constraintEnd_toEndOf="parent"
