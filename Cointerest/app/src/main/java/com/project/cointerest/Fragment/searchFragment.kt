@@ -122,8 +122,13 @@ class searchFragment : Fragment() {
                 "ALL" -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_ALL) }
                 else -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_NULL) }
             }
+
+            search_searchView.setQuery("", false);
         }
 
+        search_add_button.setOnClickListener {
+            println("추가버튼 클릭")
+        }
 
         search_searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
