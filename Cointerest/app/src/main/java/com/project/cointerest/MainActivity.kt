@@ -27,8 +27,6 @@ class MainActivity : AppCompatActivity() {
       //  search_content_view.adapter = mAdapter
         println("GO")
         configureBottomNavigation()
-
-
     }
 
     private fun configureBottomNavigation() {
@@ -38,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNaviLayout: View =
             this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)
-
 
 
         tl_ac_main_bottom_menu.getTabAt(0)!!.customView =
@@ -51,7 +48,5 @@ class MainActivity : AppCompatActivity() {
             bottomNaviLayout.findViewById(R.id.tab_chat) as RelativeLayout
         tl_ac_main_bottom_menu.getTabAt(4)!!.customView =
             bottomNaviLayout.findViewById(R.id.tab_setting) as RelativeLayout
-
     }
-
 }

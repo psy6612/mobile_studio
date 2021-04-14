@@ -131,23 +131,14 @@ class searchFragment : Fragment() {
                 filter(newText, state)
                 if (newText == "") {
                     when (state) {
-                        "KRW" -> {
-                            My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_KRW)
-                        }
-                        "BTC" -> {
-                            My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_BTC)
-                        }
-                        "ALL" -> {
-                            My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_ALL)
-                        }
-                        else -> {
-                            My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_NULL)
-                        }
+                        "KRW" -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_KRW) }
+                        "BTC" -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_BTC) }
+                        "ALL" -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_ALL) }
+                        else -> { My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_NULL) }
                     }
                 } else {
                     My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), filteredList)
                 }
-
                 return true
             }
         })
@@ -225,13 +216,8 @@ class searchFragment : Fragment() {
             if (item.kor_name == charString ||
                     item.symbol.toLowerCase() == charString.toLowerCase()) {
                 filteredList.add(item)
-//                println("찾음!!!!")
-//                println(item.kor_name)
+                println("${item.kor_name} 검색")
             }
         }
-
     }
-
-
-
 }

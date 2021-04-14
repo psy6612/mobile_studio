@@ -58,7 +58,7 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
 
             if (coin.coin_image != "") {
 
-                println("이미지 체크메이드")
+                //println("이미지 체크메이드")
 
                 //이미지 다이나믹하게 호출
                 var image_task: URLtoBitmapTask = URLtoBitmapTask()
