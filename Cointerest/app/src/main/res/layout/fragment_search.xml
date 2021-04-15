@@ -85,7 +85,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_switch_layout"
             app:layout_constraintVertical_chainStyle="spread_inside"
-            tools:layout_constraintHeight_percent="0.6"
+            tools:layout_constraintHeight_percent="1"
             tools:listitem="@layout/recycler_view_item_1" />
 
         <Button

@@ -10,4 +10,11 @@
     <string name="비트코인">비트코인</string>
     <string name="btc">BTC</string>
     <string name="_67972330_krw">67972330 KRW</string>
+    <string name="notice_alarm_switch_text">공지사항 알림받기</string>
+    <string name="target_alarm_switch_text">목표가 알림받기</string>
+    <string name="basic_market_text">거래소 탭을 누르면 기본 거래소로</string>
+    <string name="basic_market_select_text">기본거래소 지정</string>
+    <string name="alarm_market_select_text">공지사항 알림 받을 거래소</string>
+
+
 </resources>
