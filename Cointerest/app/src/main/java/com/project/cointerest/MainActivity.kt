@@ -50,6 +50,4 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return false
     }
 
-
-
 }
