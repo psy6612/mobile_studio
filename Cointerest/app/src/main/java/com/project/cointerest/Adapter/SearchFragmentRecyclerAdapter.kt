@@ -57,10 +57,8 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
 
         //var btn = itemView?.findViewById<Button>(R.id.search_add_button)
 
-
-
         fun bind(coin: CoinData, context: Context) {
-            println("버튼값")
+            //println("버튼값")
 /*            println(btn)
             btn?.setOnClickListener{
                 println("어댑터 버튼")
@@ -90,11 +88,11 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        //여기에는 데이터셋 수정이 적용 안됐음
+/*        //여기에는 데이터셋 수정이 적용 안됐음
         //println("check@@@!!")
         //println(filteredList.size)
         //println(this)
-        //val btn = context.findViewById(R.id.search_add_button)
+        //val btn = context.findViewById(R.id.search_add_button)*/
 
         holder?.bind(filteredList[position], context)
 
