@@ -31,6 +31,7 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
     //선택한 아이템리스트
     //var selectedList = ArrayList<CoinData>()
 
+
     // var btn : Button = findViewById(R.id.search_searchView)
 
 /*    //클릭 인터페이스  정의
@@ -62,7 +63,7 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
 
 
         fun bind(coin: CoinData, context: Context) {
-            println("버튼값!!")
+           // println("버튼값!!")
             println(selected.size)
 /*            println(btn)
             btn?.setOnClickListener{
@@ -92,7 +93,7 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        println("테스트!!")
+        //println("테스트!!")
         holder?.bind(selected[position], context)
 
 /*        holder.itemView.setOnClickListener {

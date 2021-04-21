@@ -28,14 +28,18 @@ class marketFragment : Fragment() {
 
         var isMarket :Boolean?
 
-        isMarket = context?.isInstalledApp("com.dunamu.exchange")
+        isMarket = context?.isInstalledApp("com.dunamu.exchange.global")
+        println(isMarket)
+        //"com.dunamu.exchange" 업비트 코리아
+        //"com.dunamu.exchange.global" 업비트 그로벌
 
         if(isMarket == true){
-            context?.openApp("com.dunamu.exchange")
+            context?.openApp("com.dunamu.exchange.global")
         }
         else{
-            context?.market("com.dunamu.exchange")
+            context?.market("com.dunamu.exchange.global")
         }
+
     }
 
     // 앱이 설치 설치되었는지 판단하는 함수
