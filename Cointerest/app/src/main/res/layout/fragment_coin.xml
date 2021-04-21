@@ -8,13 +8,12 @@
     android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".Fragment.coinFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/coin_content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintVertical_chainStyle="spread_inside"
-        tools:itemCount="6"
         tools:listitem="@layout/coin_row_item"/>
 </LinearLayout>
