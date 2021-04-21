@@ -1,4 +1,4 @@
 package com.project.cointerest
 
-data class CoinInfo(val kor_name:String, val coin_image:String, val symbol:String, val price:String)
+data class CoinInfo(val kor_name:String, val coin_image:String, val symbol:String, val market:String, var price:String)
 
