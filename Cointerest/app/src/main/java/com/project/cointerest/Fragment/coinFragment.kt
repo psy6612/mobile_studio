@@ -32,13 +32,15 @@ class coinFragment() : Fragment() {
     var selectedList = ArrayList<CoinData>()
 
     override fun onCreateView(
+
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
 
     ): View? {
 
-        selectedList.clear()
-        //DataAdd()
+        //selectedList.clear()
+        DataAdd()
 
         //selectedList.add(CoinData("비트코인","BTC","BTC","KRW"))
         println("코인프래그먼트 체크")
@@ -52,21 +54,6 @@ class coinFragment() : Fragment() {
         return rootView
     }
 
-    override fun onResume() {
-        super.onResume()
-        selectedList.clear()
-        var str = App.prefs.getString("BTC-KRW", "nothing")
-        println(str)
-
-
-        //DataAdd()
-
-        println("코인프래그먼트 체크2")
-        println(selectedList.size)
-        My_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList )
-        println("@@@@")
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,12 +63,11 @@ class coinFragment() : Fragment() {
         println(str)
 
 
-        //DataAdd()
+        DataAdd()
 
         println("코인프래그먼트 체크2")
         println(selectedList.size)
-        My_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList )
-        println("@@@@")
+
 
         //arguments?.let{selectedList}
         //selectedList.add(CoinData("비트코인","BTC","BTC","KRW"))
@@ -90,17 +76,20 @@ class coinFragment() : Fragment() {
      //   My_recyclerView = rootView.findViewById(R.id.coin_content_view!!) as RecyclerView
 
        // My_recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
+        My_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList )
+        println("@@@@")
        // My_recyclerView.adapter = SearchFragmentRecyclerAdapter(requireContext(), coin_list_KRW ,selectedList)
 
     }
 
     override fun onPause() {
         super.onPause()
+
+
     }
 
 
- /*   fun DataAdd() {
+    fun DataAdd() {
         println("데어터를 가져 오는 중...")
         val url = "https://api.upbit.com/v1/market/all"
         val request = Request.Builder().url(url).build()
@@ -132,6 +121,7 @@ class coinFragment() : Fragment() {
                             selectedList.add(com.project.cointerest.CoinData(arr[0],arr[1],arr[2],arr[3]))
                             println("체크")
                             println(selectedList[0])
+
                             //println(selectedList)
                         }
                         i++
@@ -146,7 +136,7 @@ class coinFragment() : Fragment() {
             }
         })
         return
-    }*/
+    }
 }
 
 
