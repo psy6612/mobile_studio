@@ -21,17 +21,21 @@
             android:id="@+id/setting_switch_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="12dp">
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/notice_alarm_switch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="0.2"
                 android:checked="false"
                 android:fontFamily="@font/notosanskrmedium"
                 android:freezesText="false"
                 android:includeFontPadding="true"
-                android:text="\t\t공지사항 알림받기"
+                android:text="@string/notice_alarm_switch_text"
                 android:textAllCaps="false"
                 android:textColorHighlight="#009688"
                 android:textIsSelectable="false"
@@ -40,12 +44,14 @@
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/target_alarm_switch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="0.2"
                 android:checked="true"
                 android:fontFamily="@font/notosanskrmedium"
                 android:freezesText="false"
                 android:includeFontPadding="true"
-                android:text="\t\t목표가 알림받기"
+                android:text="@string/target_alarm_switch_text"
                 android:textAllCaps="false"
                 android:textColorHighlight="#009688"
                 android:textIsSelectable="false"
@@ -54,62 +60,64 @@
             <CheckBox
                 android:id="@+id/basic_market"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="0.2"
+                android:button="@null"
+                android:checked="true"
+                android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
                 android:fontFamily="@font/notosanskrmedium"
                 android:freezesText="false"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                android:button="@null"
-                android:text="\t\t거래소 탭을 누르면 기본 거래소로"
+                android:text="@string/basic_market_text"
                 android:textAllCaps="false"
                 android:textColorHighlight="#009688"
-                android:textIsSelectable="false"
-                android:checked="true"/>
+                android:textIsSelectable="false" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/basic_market_select"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="0.2">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/notosanskrmedium"
                     android:freezesText="false"
                     android:gravity="center_vertical"
-                    android:text="\t\t기본거래소 지정"
+                    android:text="@string/basic_market_select_text"
                     android:textAllCaps="false"
                     android:textColor="#000000"
-                    android:textColorHighlight="#009688"
-                    app:autoSizeTextType="none" />
-            </RelativeLayout>
+                    android:textColorHighlight="#009688" />
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/alarm_market"
+            <LinearLayout
+                android:id="@+id/alarm_market_select"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="0.2">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/notosanskrmedium"
                     android:freezesText="false"
                     android:gravity="center_vertical"
-                    android:text="\t\t공지사항 알림 받을 거래소소"
-                   android:textAllCaps="false"
+                    android:text="@string/alarm_market_select_text"
+                    android:textAllCaps="false"
                     android:textColor="#000000"
-                    android:textColorHighlight="#009688"
-                    app:autoSizeTextType="none" />
-            </RelativeLayout>
+                    android:textColorHighlight="#009688" />
+            </LinearLayout>
 
-
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
 
         </LinearLayout>
-
-
-
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

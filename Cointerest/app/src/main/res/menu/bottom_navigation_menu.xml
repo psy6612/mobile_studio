@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/coinItem"
+        android:icon="@drawable/dollar_image"
+        android:title="관심코인" />
+    <item
+        android:id="@+id/searchItem"
+        android:icon="@drawable/search_image"
+        android:title="검색" />
+    <item
+        android:id="@+id/marketItem"
+        android:icon="@drawable/trade_image"
+        android:title="거래소 이동" />
+    <item
+        android:id="@+id/chatItem"
+        android:icon="@drawable/chat_image"
+        android:title="채팅방" />
+    <item
+        android:id="@+id/settingItem"
+        android:icon="@drawable/setting_image"
+        android:title="설정" />
+</menu>

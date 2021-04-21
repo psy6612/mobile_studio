@@ -16,70 +16,32 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.CoinData
 import com.project.cointerest.R
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 import java.net.URL
 
 
-class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayList<CoinData>) :
-        RecyclerView.Adapter<SearchFragmentRecyclerAdapter.Holder>(), Filterable {
+class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayList<CoinData>,  var selected:ArrayList<CoinData>) :
+        RecyclerView.Adapter<SearchFragmentRecyclerAdapter.Holder>() {
+
 
     val unFilteredList = coin_list // 필터 전
-    var filteredList = coin_list // 필터 후
+    private var filteredList = coin_list // 필터 후
 
     //선택한 아이템리스트
     var selectedList = ArrayList<CoinData>()
+    
+   // var btn : Button = findViewById(R.id.search_searchView)
 
-    //클릭 인터페이스  정의
+/*    //클릭 인터페이스  정의
     interface ItemClickListener {
         fun onClick(view: View, position: Int)
     }
 
     //클릭리스너 선언
-    private lateinit var itemClickListner: ItemClickListener
-
+    private lateinit var itemClickListner: ItemClickListener*/
 
     override fun getItemCount(): Int = filteredList.size
-    override fun getFilter(): Filter {
-        return object : Filter() {
-
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-
-                val charString = constraint.toString()
-                println(charString)
-                filteredList = if (charString.isEmpty()) {
-                    println("비엇음")
-                    unFilteredList
-
-                } else {
-                    var filteringList = ArrayList<CoinData>()
-                    for (item in unFilteredList) {
-                        if (item.kor_name == charString ||
-                                item.symbol.toLowerCase() == charString.toLowerCase()) {
-                            filteringList.add(item)
-                            println("찾았다!")
-                            println(item.kor_name)
-                        }
-                    }
-                    filteringList
-
-                }
-                val filterResults = FilterResults()
-                filterResults.values = filteredList
-
-                return filterResults
-            }
-
-            override fun publishResults(constraint: CharSequence?, results: FilterResults??) {
-                filteredList = results?.values as ArrayList<CoinData>
-                println("result")
-                println(filteredList.size)
-
-                //이거했는데 수정반영이 안됨
-                notifyDataSetChanged()
-            }
-        }
-    }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(context).inflate(R.layout.recycler_view_item_1, parent, false)
@@ -93,11 +55,20 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
         val C_symbol = itemView?.findViewById<TextView>(R.id.Symbol)
         val C_market = itemView?.findViewById<TextView>(R.id.Market)
 
+        //var btn = itemView?.findViewById<Button>(R.id.search_add_button)
+
+
+
         fun bind(coin: CoinData, context: Context) {
+            println("버튼값")
+/*            println(btn)
+            btn?.setOnClickListener{
+                println("어댑터 버튼")
+            }*/
 
             if (coin.coin_image != "") {
 
-                println("이미지 체크메이드")
+                //println("이미지 체크메이드")
 
                 //이미지 다이나믹하게 호출
                 var image_task: URLtoBitmapTask = URLtoBitmapTask()
@@ -120,10 +91,28 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         //여기에는 데이터셋 수정이 적용 안됐음
-        println("check@@@!!")
-        println(filteredList.size)
+        //println("check@@@!!")
+        //println(filteredList.size)
+        //println(this)
+        //val btn = context.findViewById(R.id.search_add_button)
 
         holder?.bind(filteredList[position], context)
+
+        var cancel_btn =holder.itemView.findViewById<Button>(R.id.search_cancel_button)
+
+        //println("취소버튼")
+        //println(cancel_btn)
+/*        cancel_btn.setOnClickListener{
+            println("선택 취소")
+            selectedList.clear()
+
+            println("##선택된 코인들###")
+            for(coin in selectedList){
+                println("${coin.kor_name} - ${coin.market}")
+            }
+            println("#################");
+        }*/
+
 
         holder.itemView.setOnClickListener {
             var duplicateCheck = 0
@@ -139,6 +128,7 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
                         && (filteredList[position].market == coin.market)){
 
                     selectedList.remove(selectedList[idx])
+                    selected.remove(selected[idx])
 
                     //println("${idx}번째 인덱스")
                     println("${filteredList[position].kor_name} 선택해제")
@@ -161,8 +151,9 @@ class SearchFragmentRecyclerAdapter(val context: Context, var coin_list: ArrayLi
             //리스트 중간에 삭제됐던거 다시 추가하면 튕김
             if(duplicateCheck == 0){
                 println("추가!!")
-                selectedList.add(filteredList[position])
 
+                selectedList.add(filteredList[position])
+                selected.add(filteredList[position])
                 //선택시 배경색 삽입
                 holder.itemView.findViewById<ConstraintLayout>(R.id.CLayout).setBackgroundColor(Color.parseColor("#D8D8D8"))
             }

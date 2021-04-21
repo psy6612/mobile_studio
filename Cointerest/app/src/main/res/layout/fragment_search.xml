@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:minWidth="48dp"
+            android:queryHint="ex) btc, 비트코인"
             app:layout_constraintBottom_toTopOf="@+id/search_switch_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +76,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_content_view"
             android:layout_width="match_parent"
-            android:layout_height="399dp"
+            android:layout_height="0dp"
             android:layout_marginTop="15dp"
             android:minWidth="48dp"
             app:chainUseRtl="false"
@@ -84,8 +85,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_switch_layout"
             app:layout_constraintVertical_chainStyle="spread_inside"
-            tools:itemCount="8"
-            tools:listitem="@layout/search_row_item" />
+            tools:layout_constraintHeight_percent="1"
+            tools:listitem="@layout/recycler_view_item_1" />
 
         <Button
             android:id="@+id/search_add_button"

@@ -1,16 +1,4 @@
 package com.project.cointerest
 
+data class CoinInfo(val kor_name:String, val coin_image:String, val symbol:String, val price:String)
 
-class CoinInfo() {
-    var trade_date: String? = null
-    var trade_time: String? = null
-    var trade_price: String? = null
-
-    override fun toString(): String {
-        return "CoinInfo{" +
-                "trade_date='" + trade_date + '\'' +
-                ", trade_time='" + trade_time + '\'' +
-                ", trade_price='" + trade_price + '\'' +
-                '}'
-    }
-}
