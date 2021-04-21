@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.fragment_coin.*
 import kotlinx.android.synthetic.main.fragment_coin.view.*
 import androidx.recyclerview.widget.RecyclerView
+import com.project.cointerest.App
 import com.project.cointerest.CoinData
 import com.project.cointerest.R
 import okhttp3.*
@@ -42,9 +43,13 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
     //클릭리스너 선언
     private lateinit var itemClickListner: ItemClickListener*/
 
-    override fun getItemCount(): Int = selected.size
+
+
+    override fun getItemCount(): Int = 10
+            //selected.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        DataAdd()
         val view = LayoutInflater.from(context).inflate(R.layout.coin_row_item, parent, false)
         return Holder(view)
     }
@@ -101,6 +106,53 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
         }*/
     }
 
+    fun DataAdd() {
+        println("데어터를 가져 오는 중...")
+        val url = "https://api.upbit.com/v1/market/all"
+        val request = Request.Builder().url(url).build()
+        val client = OkHttpClient()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val js = response?.body()?.string()
+                //println(js)
+                try {
+                    val coinInfo = JSONArray(js)
+                    var i = 0
+
+                    while (i < coinInfo.length()) {
+                        val jsonObject = coinInfo.getJSONObject(i)
+                        val market_name = jsonObject.getString("market")
+                        val korean_name = jsonObject.getString("korean_name")
+                        //val symbol = jsonObject.getString("symbol")
+                        //val english_name = jsonObject.getString("english_name")
+                        val name_market = market_name.split("-")
+
+                        var str = App.prefs.getString("${name_market[1]}-${name_market[0]}", "nothing")
+                        //println(str)
+                        if(str != "nothing"){
+                            val arr = str.split("-")
+
+                            //println(str)
+                            //println(arr[3])
+                            selected.add(com.project.cointerest.CoinData(arr[0],arr[1],arr[2],arr[3]))
+                            println("체크")
+                            println(selected[0])
+                            //println(selectedList)
+                        }
+                        i++
+                    }
+                } catch (e: JSONException) {
+                    println("error")
+                    println(e.printStackTrace())
+                }
+            }
+            override fun onFailure(call: Call, e: IOException) {
+                println("Request Fail")
+            }
+        })
+        return
+    }
 }
 
 
