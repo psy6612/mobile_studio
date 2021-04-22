@@ -77,6 +77,8 @@ class coinFragment() : Fragment() {
                     val coinInfo = JSONArray(js)
                     var i = 0
                     var ListCount = 0
+
+                    //키값 찾는 코드인데 너무 비효율 적이라 다시 짤 예정
                     while (i < coinInfo.length()) {
                         val jsonObject = coinInfo.getJSONObject(i)
                         val market_name = jsonObject.getString("market")
@@ -119,7 +121,6 @@ class coinFragment() : Fragment() {
 
     fun PriceSet(market:String, symbol : String, ListCount : Int){
 
-
         val priceUrl = "https://api.upbit.com/v1/ticker?markets=${market}-${symbol}"
         val request = Request.Builder().url(priceUrl).build()
         val client = OkHttpClient()
@@ -128,15 +129,15 @@ class coinFragment() : Fragment() {
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
                 val js = response?.body()?.string()
-                println(js)
+                //println(js)
                 try {
                     val CInfo = JSONArray(js)
                     val jsonObject = CInfo.getJSONObject(0)
                     var price = jsonObject.getString("trade_price")
 
                     priceStr += "${price} ${market}"
-                    println("가격정보")
-                    println(priceStr)
+                    //println("가격정보")
+                    //println(priceStr)
                     selectedList[ListCount].price = priceStr
 
                 } catch (e: JSONException) {
@@ -149,14 +150,5 @@ class coinFragment() : Fragment() {
                 println("Request Fail")
             }
         })
-        println("가격정보2")
-        println(priceStr)
-        println("@@기격정보@@")
-
     }
-
-
-
-
-
 }
