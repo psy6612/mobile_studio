@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.*
 import com.project.cointerest.Adapter.CoinContentAdapter
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -71,41 +73,52 @@ class coinFragment() : Fragment() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
-                val js = response?.body()?.string()
-                //println(js)
-                try {
-                    val coinInfo = JSONArray(js)
-                    var i = 0
-                    var ListCount = 0
-                    while (i < coinInfo.length()) {
-                        val jsonObject = coinInfo.getJSONObject(i)
-                        val market_name = jsonObject.getString("market")
-                        val name_market = market_name.split("-")
+                if (response.isSuccessful){
+                    val js = response?.body()?.string()
+                    //println(js)
+                    try {
+                        val coinInfo = JSONArray(js)
+                        var i = 0
+                        var ListCount = 0
+                        runBlocking {
+                            val addPrice = async{
+                                while (i < coinInfo.length()) {
+                                    val jsonObject = coinInfo.getJSONObject(i)
+                                    val market_name = jsonObject.getString("market")
+                                    val name_market = market_name.split("-")
 
-                        var str = App.prefs.getString("${name_market[1]}-${name_market[0]}", "nothing")
-                        //println(str)
-                        if (str != "nothing") {
-                            val arr = str.split("-")
-                            selectedList.add(CoinInfo(arr[0], arr[1], arr[2], arr[3], ""))
-                            PriceSet(name_market[0], name_market[1],ListCount)
-                            ListCount++
+                                    var str = App.prefs.getString("${name_market[1]}-${name_market[0]}", "nothing")
+                                    //println(str)
+                                    if (str != "nothing") {
+                                        val arr = str.split("-")
+                                        selectedList.add(CoinInfo(arr[0], arr[1], arr[2], arr[3], ""))
+                                        PriceSet(name_market[0], name_market[1],ListCount)
+                                        ListCount++
+                                    }
+                                    i++
+                                }
+                            }
+                            addPrice.await()
                         }
-                        i++
+
+                        activity?.runOnUiThread(Runnable{
+                            My_recyclerView.adapter?.notifyDataSetChanged()
+                            if (selectedList.isEmpty()) {
+                                My_recyclerView.visibility = View.GONE
+                                emptyView.visibility = View.VISIBLE
+                            } else {
+                                My_recyclerView.visibility = View.VISIBLE
+                                emptyView.visibility = View.GONE
+                            }
+                        })
+
+                    } catch (e: JSONException) {
+                        println("error")
+                        println(e.printStackTrace())
                     }
-                    activity?.runOnUiThread(Runnable{
-                        My_recyclerView.adapter?.notifyDataSetChanged()
-                        if (selectedList.isEmpty()) {
-                            My_recyclerView.visibility = View.GONE
-                            emptyView.visibility = View.VISIBLE
-                        } else {
-                            My_recyclerView.visibility = View.VISIBLE
-                            emptyView.visibility = View.GONE
-                        }
-                    })
-
-                } catch (e: JSONException) {
-                    println("error")
-                    println(e.printStackTrace())
+                }
+                else{
+                    println("Not Successful")
                 }
             }
 
@@ -127,21 +140,30 @@ class coinFragment() : Fragment() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
-                val js = response?.body()?.string()
-                println(js)
-                try {
-                    val CInfo = JSONArray(js)
-                    val jsonObject = CInfo.getJSONObject(0)
-                    var price = jsonObject.getString("trade_price")
+                if (response.isSuccessful){
+                    val js = response?.body()?.string()
+                    println(js)
+                    try {
+                        val CInfo = JSONArray(js)
+                        val jsonObject = CInfo.getJSONObject(0)
+                        var price = jsonObject.getString("trade_price")
 
-                    priceStr += "${price} ${market}"
-                    println("가격정보")
-                    println(priceStr)
-                    selectedList[ListCount].price = priceStr
+                        priceStr += "${price} ${market}"
+                        println("가격정보")
+                        println(priceStr)
 
-                } catch (e: JSONException) {
-                    println("error")
-                    println(e.printStackTrace())
+                        activity?.runOnUiThread(Runnable{
+                            selectedList[ListCount].price = priceStr
+                            My_recyclerView.adapter?.notifyDataSetChanged()
+                        })
+
+                    } catch (e: JSONException) {
+                        println("error")
+                        println(e.printStackTrace())
+                    }
+                }
+                else{
+                    println("Not Successful")
                 }
             }
 
