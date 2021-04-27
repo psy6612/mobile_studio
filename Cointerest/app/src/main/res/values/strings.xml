@@ -3,18 +3,19 @@
     <string name="krw_market">KRW 마켓</string>
     <string name="btc_market">BTC 마켓</string>
     <string name="add_interest_coin">관심코인 추가</string>
-    <string name="cancel">취소</string>
+    <string name="cancel">초기화</string>
     <string name="notice">등록된 코인이 없습니다.</string>
     <string name="chartimage">chartImage</string>
     <string name="coinimage">coinimage</string>
     <string name="비트코인">비트코인</string>
     <string name="btc">BTC</string>
     <string name="_67972330_krw">67972330 KRW</string>
-<!--    <string name="notice_alarm_switch_text">공지사항 알림받기</string>-->
-<!--    <string name="target_alarm_switch_text">목표가 알림받기</string>-->
-<!--    <string name="basic_market_text">거래소 탭을 누르면 기본 거래소로</string>-->
-<!--    <string name="basic_market_select_text">기본거래소 지정</string>-->
-<!--    <string name="alarm_market_select_text">공지사항 알림 받을 거래소</string>-->
+    <string name="notice_alarm_switch_text">공지사항 알림받기</string>
+    <string name="target_alarm_switch_text">목표가 알림받기</string>
+    <string name="basic_market_text">거래소 탭을 누르면 기본 거래소로</string>
+    <string name="basic_market_select_text">기본거래소 지정</string>
+    <string name="alarm_market_select_text">공지사항 알림 받을 거래소</string>
+    <string name="coin_empty_text">지정한 코인이 없습니다</string>
 
 
 </resources>

@@ -16,7 +16,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.fragment_coin.*
 import kotlinx.android.synthetic.main.fragment_coin.view.*
 import androidx.recyclerview.widget.RecyclerView
+import com.project.cointerest.App
 import com.project.cointerest.CoinData
+import com.project.cointerest.CoinInfo
 import com.project.cointerest.R
 import okhttp3.*
 import org.json.JSONArray
@@ -25,7 +27,7 @@ import java.io.IOException
 import java.net.URL
 import kotlin.concurrent.timer
 
-class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>):
+class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinInfo>):
         RecyclerView.Adapter<CoinContentAdapter.Holder>() {
 
     //선택한 아이템리스트
@@ -42,7 +44,10 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
     //클릭리스너 선언
     private lateinit var itemClickListner: ItemClickListener*/
 
+
+
     override fun getItemCount(): Int = selected.size
+            //selected.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(context).inflate(R.layout.coin_row_item, parent, false)
@@ -57,18 +62,12 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
         val C_kor = itemView?.findViewById<TextView>(R.id.coin_row_item_name)
         val C_symbol = itemView?.findViewById<TextView>(R.id.coin_row_item_eng)
         //val C_market = itemView?.findViewById<TextView>(R.id.Market)
+        var C_price = itemView?.findViewById<TextView>(R.id.coin_row_item_price)
+        var Price_str = ""
 
-        //var btn = itemView?.findViewById<Button>(R.id.search_add_button)
+        fun bind(coin: CoinInfo, context: Context) {
 
 
-
-        fun bind(coin: CoinData, context: Context) {
-           // println("버튼값!!")
-            println(selected.size)
-/*            println(btn)
-            btn?.setOnClickListener{
-                println("어댑터 버튼")
-            }*/
 
             if (coin.coin_image != "") {
 
@@ -87,8 +86,10 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinData>)
             }
             C_kor?.text = coin.kor_name
             C_symbol?.text = coin.symbol
+            C_price?.text = coin.price
             //C_market?.text = coin.market
         }
+
     }
 
     @SuppressLint("SetTextI18n")
