@@ -9,6 +9,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+
     defaultConfig {
         applicationId "com.project.cointerest"
         minSdkVersion 22
@@ -33,6 +34,9 @@ android {
         jvmTarget = '1.8'
     }
     dataBinding {
+        enabled = true
+    }
+    viewBinding{
         enabled = true
     }
 }
