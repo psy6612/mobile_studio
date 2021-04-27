@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.project.cointerest.Adapter.SearchFragmentRecyclerAdapter
 import com.project.cointerest.App
 import com.project.cointerest.CoinData
@@ -174,11 +176,11 @@ class searchFragment : Fragment() {
             println(selectedList.size)
 
             //ToDo 데이터 저장
-
+            //Todo 이 코드는 위험하다. 상폐되면 쓰레기가 생김 for말고 다른방법으로 수정하기
             for(item in selectedList){
                 App.prefs.setString("${item.symbol}-${item.market}","${item.kor_name}-${item.coin_image}-${item.symbol}-${item.market}")
-
             }
+
             /////////////////////////
             println(selectedList.size)
             selectedList.clear()
