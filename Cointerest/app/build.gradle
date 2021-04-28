@@ -71,4 +71,16 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:4.10.0"
  //   kapt "com.github.bumptech.glide:compiler:4.10.0"
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+// Declare SciChart libraries as module dependencies
+    implementation (group: 'com.scichart.library', name: 'core', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'data', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'drawing', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'charting3d', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'charting', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'extensions', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'extensions3d', version: '3.0.0.4253', ext: 'aar')
 }
