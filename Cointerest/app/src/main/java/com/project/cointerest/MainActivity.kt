@@ -5,6 +5,7 @@ package com.project.cointerest
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import okhttp3.*
@@ -16,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_search.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     var coinFrag : Fragment = coinFragment()
+    var backBtn : Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,4 +59,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return false
     }
 
+
+    override fun onBackPressed() {
+        var curTime : Long = System.currentTimeMillis()
+        var gapTime : Long = curTime -backBtn
+        if(gapTime >= 0 && gapTime <= 2000){
+            super.onBackPressed()
+        }
+        else{
+            backBtn = curTime
+            Toast.makeText(this, "뒤로가기를 한 번 더 누르시면 앱이 종료됩니다.",Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
 }

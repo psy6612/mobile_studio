@@ -6,12 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.*
 import com.project.cointerest.Adapter.CoinContentAdapter
+import kotlinx.android.synthetic.main.coin_row_item.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -44,6 +47,7 @@ class coinFragment() : Fragment() {
 
     ): View? {
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         println("코인프래그먼트 체크")
         println(selectedList.size)
@@ -60,7 +64,6 @@ class coinFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         //selectedList.clear()
         //DataAdd()
@@ -184,7 +187,7 @@ class coinFragment() : Fragment() {
                             val jsonObject = CInfo.getJSONObject(0)
                             var price = jsonObject.getString("trade_price")
 
-                            priceStr += "${symbol} ${price} ${market}"
+                            priceStr += "${price} ${market}"
                             println("가격정보")
                             println(priceStr)
 

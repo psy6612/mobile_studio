@@ -2,32 +2,31 @@ package com.project.cointerest.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.recyclerview.widget.RecyclerView
+import com.lakue.lakuepopupactivity.PopupActivity
+import com.lakue.lakuepopupactivity.PopupGravity
+import com.lakue.lakuepopupactivity.PopupType
+import com.project.cointerest.CoinInfo
+import com.project.cointerest.MainActivity
+import com.project.cointerest.R
+import kotlinx.android.synthetic.main.coin_row_item.view.*
 import kotlinx.android.synthetic.main.fragment_coin.*
 import kotlinx.android.synthetic.main.fragment_coin.view.*
-import androidx.recyclerview.widget.RecyclerView
-import com.project.cointerest.App
-import com.project.cointerest.CoinData
-import com.project.cointerest.CoinInfo
-import com.project.cointerest.R
 import okhttp3.*
-import org.json.JSONArray
-import org.json.JSONException
-import java.io.IOException
 import java.net.URL
-import kotlin.concurrent.timer
 
-class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinInfo>):
+
+class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>):
         RecyclerView.Adapter<CoinContentAdapter.Holder>() {
 
     //선택한 아이템리스트
@@ -67,8 +66,6 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinInfo>)
 
         fun bind(coin: CoinInfo, context: Context) {
 
-
-
             if (coin.coin_image != "") {
 
                 //println("이미지 체크메이드")
@@ -95,6 +92,16 @@ class CoinContentAdapter(val context: Context, var selected:ArrayList<CoinInfo>)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
         //println("테스트!!")
+
+        holder.itemView.coin_row_item_chart.setOnClickListener {
+
+            Toast.makeText(context, "차트 클릭 체크", Toast.LENGTH_SHORT).show();
+        }
+        
+        holder.itemView.coin_row_item_layout.setOnClickListener {
+            Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
+        }
+
         holder?.bind(selected[position], context)
 
 /*        holder.itemView.setOnClickListener {

@@ -28,16 +28,16 @@ class marketFragment : Fragment() {
 
         var isMarket :Boolean?
 
-        isMarket = context?.isInstalledApp("com.dunamu.exchange.global")
+        isMarket = context?.isInstalledApp("com.dunamu.exchange")
         println(isMarket)
         //"com.dunamu.exchange" 업비트 코리아
         //"com.dunamu.exchange.global" 업비트 그로벌
 
         if(isMarket == true){
-            context?.openApp("com.dunamu.exchange.global")
+            context?.openApp("com.dunamu.exchange")
         }
         else{
-            context?.market("com.dunamu.exchange.global")
+            context?.market("com.dunamu.exchange")
         }
 
     }
