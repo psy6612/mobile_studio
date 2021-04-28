@@ -166,7 +166,7 @@ class coinFragment() : Fragment() {
 
     fun PriceSet(market:String, symbol : String, ListCount : Int) {
 
-        timer(period = 500) { // 0.5초마다 시세 갱신
+        timer(period = 1000) { // 1초마다 시세 갱신
             val priceUrl = "https://api.upbit.com/v1/ticker?markets=${market}-${symbol}"
             val request = Request.Builder().url(priceUrl).build()
             val client = OkHttpClient()
@@ -199,6 +199,11 @@ class coinFragment() : Fragment() {
                         } catch (e: JSONException) {
                             println("error")
                             println(e.printStackTrace())
+                        }
+                        finally {
+                            // 연결 해제
+                            response.body()?.close()
+                            client.connectionPool().evictAll()
                         }
                     } else {
                         println("Not Successful")
