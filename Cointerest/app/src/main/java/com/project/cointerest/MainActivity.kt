@@ -3,6 +3,7 @@ package com.project.cointerest
 //import android.support.v7.app.AppCompatActivity
 //import androidx.recyclerview.widget.LinearLayoutManager
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -15,21 +16,45 @@ import com.project.cointerest.Fragment.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.widget.RelativeLayout
 import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import kotlinx.android.synthetic.main.chart_view.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
     var coinFrag : Fragment = coinFragment()
     var backBtn : Long = 0
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+/*
+        val webView = findViewById<WebView>(R.id.chart_view)
+
+        // 와이파이 & 데이터 연결되어 있으면 웹뷰 생성
+
+
+            // 인터넷 연결 되어 있을 때 (셀룰러/와이파이)
+            webView.settings.javaScriptEnabled = true // 자바 스크립트 허용
+
+            // 웹뷰안에 새 창이 뜨지 않도록 방지
+            webView.webViewClient = WebViewClient()
+            webView.webChromeClient = WebChromeClient()
+
+            // 원하는 주소를 WebView에 연결
+            webView.loadUrl("http://3.35.174.63/chart.php")
+*/
+
         println("GO")
-        //tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
-        configureBottomNavigation()
-        //supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, coinFrag).commit()
+        tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
+
+        supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, coinFrag).commit()
     }
 
-    private fun configureBottomNavigation() {
+/*    private fun configureBottomNavigation() {
         vp_ac_main_frag_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 5)
 
         tl_ac_main_bottom_menu.setupWithViewPager(vp_ac_main_frag_pager)
@@ -47,42 +72,36 @@ class MainActivity : AppCompatActivity() {
             bottomNaviLayout.findViewById(R.id.tab_chat) as RelativeLayout
         tl_ac_main_bottom_menu.getTabAt(4)!!.customView =
             bottomNaviLayout.findViewById(R.id.tab_setting) as RelativeLayout
-    }
+    }*/
 
 
-/*    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.coinItem -> {
-                tl_ac_main_bottom_menu.findViewById(R.id.coinItem) as RelativeLayout
-                //supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager , coinFrag).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager , coinFrag).commitAllowingStateLoss()
                 return true
             }
             R.id.searchItem -> {
-                tl_ac_main_bottom_menu.findViewById(R.id.searchItem) as RelativeLayout
-                //supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, searchFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, searchFragment()).commitAllowingStateLoss()
                 return true
             }
             R.id.marketItem -> {
-                tl_ac_main_bottom_menu.findViewById(R.id.marketItem) as RelativeLayout
-                //supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, marketFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, marketFragment()).commitAllowingStateLoss()
 
                 return true
             }
             R.id.chatItem -> {
-                tl_ac_main_bottom_menu.findViewById(R.id.chatItem) as RelativeLayout
-                //supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, chatFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, chatFragment()).commitAllowingStateLoss()
 
                 return true
             }
             R.id.settingItem -> {
-                tl_ac_main_bottom_menu.findViewById(R.id.settingItem) as RelativeLayout
-                //supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, settingFragment()).commitAllowingStateLoss()
-
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, settingFragment()).commitAllowingStateLoss()
                 return true
             }
         }
         return false
-    }*/
+    }
 
 
     override fun onBackPressed() {
@@ -95,7 +114,5 @@ class MainActivity : AppCompatActivity() {
             backBtn = curTime
             Toast.makeText(this, "뒤로가기를 한 번 더 누르시면 앱이 종료됩니다.",Toast.LENGTH_SHORT).show()
         }
-
-
     }
 }

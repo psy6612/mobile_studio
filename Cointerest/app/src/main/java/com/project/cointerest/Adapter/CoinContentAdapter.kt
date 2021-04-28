@@ -10,14 +10,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
-import com.lakue.lakuepopupactivity.PopupActivity
-import com.lakue.lakuepopupactivity.PopupGravity
-import com.lakue.lakuepopupactivity.PopupType
+import com.project.cointerest.ChartView
 import com.project.cointerest.CoinInfo
-import com.project.cointerest.MainActivity
 import com.project.cointerest.R
 import kotlinx.android.synthetic.main.coin_row_item.view.*
 import kotlinx.android.synthetic.main.fragment_coin.*
@@ -60,7 +55,7 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
         val C_image = itemView?.findViewById<ImageView>(R.id.coin_row_item_image)
         val C_kor = itemView?.findViewById<TextView>(R.id.coin_row_item_name)
         val C_symbol = itemView?.findViewById<TextView>(R.id.coin_row_item_eng)
-        //val C_market = itemView?.findViewById<TextView>(R.id.Market)
+//        val C_market = itemView?.findViewById<TextView>(R.id.Market)
         var C_price = itemView?.findViewById<TextView>(R.id.coin_row_item_price)
         var Price_str = ""
 
@@ -85,22 +80,28 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
             C_symbol?.text = coin.symbol
             C_price?.text = coin.price
             //C_market?.text = coin.market
+
+            itemView.coin_row_item_chart.setOnClickListener {
+
+                Toast.makeText(context, "차트 클릭 체크", Toast.LENGTH_SHORT).show()
+
+                Intent(context, ChartView::class.java).apply {
+                    putExtra("coin", "${coin.symbol}${coin.market}")
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.run { context.startActivity(this) }
+
+            }
         }
 
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        //println("테스트!!")
 
-        holder.itemView.coin_row_item_chart.setOnClickListener {
-
-            Toast.makeText(context, "차트 클릭 체크", Toast.LENGTH_SHORT).show();
-        }
-        
         holder.itemView.coin_row_item_layout.setOnClickListener {
             Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
         }
+
 
         holder?.bind(selected[position], context)
 

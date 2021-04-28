@@ -1,3 +1,4 @@
+/*
 package com.project.cointerest
 
 import androidx.fragment.app.Fragment
@@ -19,4 +20,4 @@ class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : In
 
     override fun getCount(): Int = fragmentCount // 자바에서는 { return fragmentCount }
 
-}
+}*/

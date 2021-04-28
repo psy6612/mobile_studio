@@ -23,6 +23,7 @@ import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 import java.io.IOException
 import java.net.URL
 import java.text.DateFormatSymbols
@@ -48,6 +49,7 @@ class coinFragment() : Fragment() {
     ): View? {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
 
         println("코인프래그먼트 체크")
         println(selectedList.size)
@@ -167,6 +169,7 @@ class coinFragment() : Fragment() {
     fun PriceSet(market:String, symbol : String, ListCount : Int) {
 
         timer(period = 1000) { // 1초마다 시세 갱신
+
             val priceUrl = "https://api.upbit.com/v1/ticker?markets=${market}-${symbol}"
             val request = Request.Builder().url(priceUrl).build()
             val client = OkHttpClient()
@@ -188,7 +191,7 @@ class coinFragment() : Fragment() {
                             var price = jsonObject.getString("trade_price")
 
                             priceStr += "${price} ${market}"
-                            println("가격정보")
+                            //println("가격정보")
                             println(priceStr)
 
                             activity?.runOnUiThread(Runnable {
