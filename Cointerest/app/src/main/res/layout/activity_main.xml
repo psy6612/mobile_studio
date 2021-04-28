@@ -7,6 +7,13 @@
     tools:context=".MainActivity">
 
     <FrameLayout
+        android:id="@+id/full_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/vp_ac_main_frag_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -26,7 +33,7 @@
         app:layout_constraintRight_toLeftOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         android:fontFamily="@font/notosanskrmedium"/>
-    
 
-    
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
