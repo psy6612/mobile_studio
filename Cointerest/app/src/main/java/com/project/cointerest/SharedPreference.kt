@@ -14,11 +14,17 @@ class SharedPreference(context: Context) {
         prefs.edit().putString(key, str).apply()
     }
 
+    //초기화
     fun deleteAll(){
         prefs.edit().clear().apply()
         println("SharedPreference 삭제완료")
         //prefs.edit().commit()
     }
 
+    //선택 삭제
+    fun selectedDelete(symbol:String, market:String){
+        prefs.edit().remove("${symbol}-${market}").apply()
+        println("${symbol}-${market} 삭제완료")
+    }
 }
 

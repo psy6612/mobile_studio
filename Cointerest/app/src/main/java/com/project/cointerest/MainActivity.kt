@@ -5,30 +5,19 @@ package com.project.cointerest
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import okhttp3.*
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.cointerest.Fragment.*
-import com.project.cointerest.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.fragment_setting.*
-import kotlinx.android.synthetic.main.*
-
+import kotlinx.android.synthetic.main.fragment_search.*
 
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     var coinFrag : Fragment = coinFragment()
-
-    //확인중
-    val market_items = arrayListOf<MarketListItem>(
-            MarketListItem("bithumb_logo", "빗썸"),
-            MarketListItem("upbit_logo", "업비트"),
-            MarketListItem("coinone_logo", "코인원")
-    )
-
-    //******************
-
-
+    var backBtn : Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +29,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, coinFrag).commit()
 
     }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -71,4 +59,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return false
     }
 
+
+    override fun onBackPressed() {
+        var curTime : Long = System.currentTimeMillis()
+        var gapTime : Long = curTime -backBtn
+        if(gapTime >= 0 && gapTime <= 2000){
+            super.onBackPressed()
+        }
+        else{
+            backBtn = curTime
+            Toast.makeText(this, "뒤로가기를 한 번 더 누르시면 앱이 종료됩니다.",Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
 }
