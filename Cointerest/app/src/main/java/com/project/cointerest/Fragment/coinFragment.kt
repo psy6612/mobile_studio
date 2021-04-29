@@ -25,6 +25,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
+import java.math.BigDecimal
 import java.net.URL
 import java.text.DateFormatSymbols
 import java.util.*
@@ -93,7 +94,10 @@ class coinFragment() : Fragment() {
 
     //ToDo 메인에서 시세 보여주는거는 타이머로 쓰고 목표가 도달해서 알람하는건 WorkManager 또는 서버에서 처리하도록 구현
     //Todo App쪽에 Firebase랑 호환되기 어렵다.
-
+    //Todo RelationLayout형식으로 바꾸기
+    //Todo 업비트 차트 구현
+    //Todo 목표가 설정
+    
     fun DataAdd() {
                 // selectedList.clear()
         println("데어터를 가져 오는 중...")
@@ -123,8 +127,6 @@ class coinFragment() : Fragment() {
 
                                     if (str != "nothing") {
                                         val arr = str.split("-")
-
-
                                         selectedList.add(CoinInfo(arr[0], arr[1], arr[2], arr[3], ""))
                                         PriceSet(name_market[0], name_market[1], listCount) //같은 코인의 타이머 함수가 계속 누적됨 -> 렉발생(해결)
                                         listCount++
@@ -166,7 +168,7 @@ class coinFragment() : Fragment() {
     }
 
 
-    fun PriceSet(market:String, symbol : String, ListCount : Int) {
+    fun PriceSet(market:String, symbol : String, ListCount : Int){
 
         timer(period = 1000) { // 1초마다 시세 갱신
 
@@ -189,8 +191,9 @@ class coinFragment() : Fragment() {
                             val CInfo = JSONArray(js)
                             val jsonObject = CInfo.getJSONObject(0)
                             var price = jsonObject.getString("trade_price")
+                            var newPrice = BigDecimal(price).toPlainString()
 
-                            priceStr += "${price} ${market}"
+                            priceStr += "${newPrice} ${market}"
                             //println("가격정보")
                             println(priceStr)
 
@@ -221,5 +224,6 @@ class coinFragment() : Fragment() {
         println(priceStr)
         println("@@기격정보@@")*/
         }
+
     }
 }

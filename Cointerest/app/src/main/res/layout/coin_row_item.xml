@@ -9,13 +9,13 @@
 
     <ImageView
         android:id="@+id/coin_row_item_chart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="38dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
         android:contentDescription="chartimage"
         android:src="@drawable/chart"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,10 +76,11 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:gravity="top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/coin_row_item_chart"
+        app:layout_constraintLeft_toRightOf="@id/coin_row_item_eng"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

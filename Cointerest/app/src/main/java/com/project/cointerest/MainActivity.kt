@@ -31,53 +31,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-/*
-        val webView = findViewById<WebView>(R.id.chart_view)
-
-        // 와이파이 & 데이터 연결되어 있으면 웹뷰 생성
-
-
-            // 인터넷 연결 되어 있을 때 (셀룰러/와이파이)
-            webView.settings.javaScriptEnabled = true // 자바 스크립트 허용
-
-            // 웹뷰안에 새 창이 뜨지 않도록 방지
-            webView.webViewClient = WebViewClient()
-            webView.webChromeClient = WebChromeClient()
-
-            // 원하는 주소를 WebView에 연결
-            webView.loadUrl("http://3.35.174.63/chart.php")
-*/
-
         println("GO")
         tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
 
         supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, coinFrag).commit()
     }
 
-/*    private fun configureBottomNavigation() {
-        vp_ac_main_frag_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 5)
-
-        tl_ac_main_bottom_menu.setupWithViewPager(vp_ac_main_frag_pager)
-
-        val bottomNaviLayout: View =
-            this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)
-
-        tl_ac_main_bottom_menu.getTabAt(0)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_interesting_coin) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(1)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_search) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(2)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_market) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(3)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_chat) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(4)!!.customView =
-            bottomNaviLayout.findViewById(R.id.tab_setting) as RelativeLayout
-    }*/
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.coinItem -> {
+                //Todo ★★★★★프래그먼트 최적화★★★★★
+                //Todo 가격 지수로된거 고치기
                 supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager , coinFrag).commitAllowingStateLoss()
                 return true
             }

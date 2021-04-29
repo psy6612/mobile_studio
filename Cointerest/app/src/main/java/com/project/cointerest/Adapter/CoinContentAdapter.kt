@@ -97,10 +97,8 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
                     putExtra("coin", "${coin.symbol}${coin.market}")
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run { context.startActivity(this) }
-
             }
         }
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -153,17 +151,17 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
                 }
                 if (priceBeforeChange != null && priceAfterChange != null) {
                     if (priceAfterChange!! > priceBeforeChange!!) {
-                        priceView.paintFlags = priceView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+                        //priceView.paintFlags = priceView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
                         priceView.setTextColor(upColor)
                     }
                     else if (priceAfterChange!! < priceBeforeChange!!) {
-                        priceView.paintFlags = priceView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+                        //priceView.paintFlags = priceView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
                         priceView.setTextColor(downColor)
                     }
                     else{
                         Thread.sleep(100)
                         priceView.setTextColor(normalColor)
-                        priceView.paintFlags = priceView.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
+                        //priceView.paintFlags = priceView.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
                     }
                 }
             }
