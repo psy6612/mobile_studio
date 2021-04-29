@@ -113,7 +113,7 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
             var priceView = holder.itemView.coin_row_item_price
             var upColor = Color.RED
             var downColor = Color.BLUE
-            var normalColor = Color.DKGRAY
+            var normalColor = Color.GRAY
             var priceBeforeChange : Float? = null
             var priceAfterChange : Float? = null
             override fun afterTextChanged(s: Editable?) {
@@ -156,7 +156,7 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
                         priceView.setTextColor(downColor)
                     }
                     else{
-                        Thread.sleep(300)
+                        Thread.sleep(200)
                         priceView.setTextColor(normalColor)
                         priceView.paintFlags = priceView.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
                     }
