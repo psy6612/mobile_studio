@@ -128,10 +128,12 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
                     }
                     priceBeforeChange = s.toString().split("E")[0].toFloatOrNull()?.times(digits!!)
                 }
-                else{
+                else if (priceView.text.toString().contains("KRW")){
                     priceBeforeChange = s.toString().split("KRW")[0].toFloatOrNull()
                 }
-
+                else {
+                    priceBeforeChange = s.toString().split("BTC")[0].toFloatOrNull()
+                }
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -143,8 +145,11 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
                     }
                     priceAfterChange = priceView.text.toString().split("E")[0].toFloatOrNull()?.times(digits!!)
                 }
-                else{
+                else if (priceView.text.toString().contains("KRW")){
                     priceAfterChange =priceView.text.toString().split("KRW")[0].toFloatOrNull()
+                }
+                else {
+                    priceAfterChange =priceView.text.toString().split("BTC")[0].toFloatOrNull()
                 }
                 if (priceBeforeChange != null && priceAfterChange != null) {
                     if (priceAfterChange!! > priceBeforeChange!!) {
@@ -156,7 +161,7 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
                         priceView.setTextColor(downColor)
                     }
                     else{
-                        Thread.sleep(200)
+                        Thread.sleep(100)
                         priceView.setTextColor(normalColor)
                         priceView.paintFlags = priceView.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
                     }
