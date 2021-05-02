@@ -34,34 +34,35 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         println("GO")
         tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
 
-        supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, coinFrag).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, coinFragment()).commit()
     }
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.coinItem -> {
-                //Todo ★★★★★프래그먼트 최적화★★★★★
-                //Todo 가격 지수로된거 고치기
-                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager , coinFrag).commitAllowingStateLoss()
+                //Todo ★★★★★프래그먼트 최적화★★★★★ 원인은 notifyDataSetChanged() 이게 매우 무겁다
+                //Todo diffutil을 써보자
+
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager , coinFragment()).commit()
                 return true
             }
             R.id.searchItem -> {
-                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, searchFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, searchFragment()).commit()
                 return true
             }
             R.id.marketItem -> {
-                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, marketFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, marketFragment()).commit()
 
                 return true
             }
             R.id.chatItem -> {
-                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, chatFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, chatFragment()).commit()
 
                 return true
             }
             R.id.settingItem -> {
-                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, settingFragment()).commitAllowingStateLoss()
+                supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, settingFragment()).commit()
                 return true
             }
         }

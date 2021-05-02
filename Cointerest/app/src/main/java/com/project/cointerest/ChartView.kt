@@ -28,6 +28,5 @@ class ChartView : AppCompatActivity() {
         back_btn.setOnClickListener {
             finishAndRemoveTask()
         }
-
     }
 }

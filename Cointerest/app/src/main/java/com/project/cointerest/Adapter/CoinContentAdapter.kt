@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.method.TextKeyListener.clear
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -16,21 +17,42 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.ChartView
 import com.project.cointerest.CoinInfo
+import com.project.cointerest.DiffCallback
 import com.project.cointerest.R
 import kotlinx.android.synthetic.main.coin_row_item.view.*
 import kotlinx.android.synthetic.main.fragment_coin.*
 import kotlinx.android.synthetic.main.fragment_coin.view.*
 import okhttp3.*
 import java.net.URL
+import java.util.Collections.addAll
 import kotlin.concurrent.timer
 import kotlin.math.pow
 
 
 class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>):
         RecyclerView.Adapter<CoinContentAdapter.Holder>() {
+
+
+    private val diffUtil = AsyncListDiffer(this, DiffCallback())
+
+    fun replaceTo(newItems: List<CoinInfo>) = diffUtil.submitList(newItems)
+
+    fun getItem(position: Int) = diffUtil.currentList[position]
+
+
+/*    private val asyncDiffer = AsyncListDiffer(this, DiffCallback())
+
+
+    fun replaceItems(newPeople: List<CoinInfo>) {
+        asyncDiffer.submitList(newPeople)
+    }*/
+
+
 
     //선택한 아이템리스트
     //var selectedList = ArrayList<CoinData>()
@@ -46,17 +68,16 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
     //클릭리스너 선언
     private lateinit var itemClickListner: ItemClickListener*/
 
-
-
     override fun getItemCount(): Int = selected.size
+
+
+//    override fun getItemCount(): Int = selected.size
             //selected.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(context).inflate(R.layout.coin_row_item, parent, false)
         return Holder(view)
     }
-
-
 
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
@@ -109,8 +130,8 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
 
         holder.itemView.coin_row_item_price.addTextChangedListener(object : TextWatcher {
             var priceView = holder.itemView.coin_row_item_price
-            var upColor = Color.RED
-            var downColor = Color.BLUE
+            var upColor = Color.parseColor("#B22222")
+            var downColor = Color.parseColor("#4169E1")
             var normalColor = Color.GRAY
             var priceBeforeChange : Float? = null
             var priceAfterChange : Float? = null
@@ -167,7 +188,7 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
             }
         })
 
-
+//        holder.bind(getItem(position),context)
         holder?.bind(selected[position], context)
 
 /*        holder.itemView.setOnClickListener {
