@@ -2,6 +2,7 @@ package com.project.cointerest.Fragment
 
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,16 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.*
 import com.project.cointerest.Adapter.CoinContentAdapter
+import com.scichart.core.utility.Dispatcher.runOnUiThread
 import kotlinx.android.synthetic.main.coin_row_item.*
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.selects.select
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
 import java.io.IOException
+import java.lang.Runnable
+import java.math.BigDecimal
 import java.net.URL
 import java.text.DateFormatSymbols
 import java.util.*
@@ -40,6 +43,14 @@ class coinFragment() : Fragment() {
     var runCheck =0 //같은 코인의 타이머 중복동작 방지
     var timerCheck = 0 // 타이머를 정지하기위한 변수
 
+    private var isRunning=true
+    val thread=ThreadClass()
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
     override fun onCreateView(
 
             inflater: LayoutInflater, container: ViewGroup?,
@@ -49,8 +60,13 @@ class coinFragment() : Fragment() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        thread.start()
+        DataAdd()
+
+        Log.d("싸이즈","${selectedList.size}")
+
         println("코인프래그먼트 체크")
-        println(selectedList.size)
+
 
         var rootView = inflater.inflate(R.layout.fragment_coin, container, false)
         My_recyclerView = rootView.findViewById(R.id.coin_content_view!!) as RecyclerView
@@ -62,25 +78,41 @@ class coinFragment() : Fragment() {
     }
 
 
+    inner class ThreadClass:Thread(){
+        override fun run(){
+            while(isRunning){
+                runOnUiThread(UIClass())
+                SystemClock.sleep(2000)
+            }
+        }
+    }
+
+    inner class UIClass:Runnable{
+        override fun run(){
+            newPriceSet()
+            My_recyclerView.adapter?.notifyDataSetChanged() //Todo 매우 무거움. diffutil로 수정할 예정
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        isRunning=false
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //selectedList.clear()
-        //DataAdd()
-
-        println("코인프래그먼트 체크2")
-        println(selectedList.size)
-
-        My_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList)
-
+        //println("코인프래그먼트 체크2")
+        //My_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList)
     }
 
     override fun onResume() {
         super.onResume()
         timerCheck = 0
-        selectedList.clear()
+       // selectedList.clear()
         if(runCheck == 0) {
-            DataAdd()
+            //DataAdd()
         }
     }
     override fun onPause() {
@@ -91,7 +123,10 @@ class coinFragment() : Fragment() {
 
     //ToDo 메인에서 시세 보여주는거는 타이머로 쓰고 목표가 도달해서 알람하는건 WorkManager 또는 서버에서 처리하도록 구현
     //Todo App쪽에 Firebase랑 호환되기 어렵다.
-
+    //Todo RelationLayout형식으로 바꾸기
+    //Todo 업비트 차트 구현
+    //Todo 목표가 설정
+    
     fun DataAdd() {
                 // selectedList.clear()
         println("데어터를 가져 오는 중...")
@@ -118,13 +153,22 @@ class coinFragment() : Fragment() {
 
                                     var str = App.prefs.getString("${name_market[1]}-${name_market[0]}", "nothing") // key = (마켓-심볼)
                                     //println(str)
-
                                     if (str != "nothing") {
                                         val arr = str.split("-")
 
-
-                                        selectedList.add(CoinInfo(arr[0], arr[1], arr[2], arr[3], ""))
-                                        PriceSet(name_market[0], name_market[1], listCount) //같은 코인의 타이머 함수가 계속 누적됨 -> 렉발생(해결)
+                                        var idx = 0
+                                        var duplicateCheck = false
+                                        for(item in selectedList){
+                                            if(item.symbol == arr[1] && item.market == arr[0]){
+                                                duplicateCheck = true
+                                                break
+                                            }
+                                            idx++
+                                        }
+                                        if(duplicateCheck == false){
+                                            selectedList.add(CoinInfo(arr[0], arr[1], arr[2], arr[3], ""))
+                                        }
+                                        println("${arr[0]} ${arr[1]}")
                                         listCount++
                                     }
                                     i++
@@ -135,7 +179,8 @@ class coinFragment() : Fragment() {
 
                         activity?.runOnUiThread(Runnable {
 
-                            My_recyclerView.adapter?.notifyDataSetChanged()
+                            My_recyclerView.adapter?.notifyDataSetChanged() //Todo
+
                             if (selectedList.isEmpty()) {
                                 My_recyclerView.visibility = View.GONE
                                 emptyView.visibility = View.VISIBLE
@@ -164,17 +209,16 @@ class coinFragment() : Fragment() {
     }
 
 
-    fun PriceSet(market:String, symbol : String, ListCount : Int) {
+    fun newPriceSet(){
+        println("newPriceSet")
+        for((listCount, item) in selectedList.withIndex()) {
+            Log.d("카운터","${listCount} - ${selectedList[listCount].symbol}")
 
-        timer(period = 1000) { // 1초마다 시세 갱신
-            val priceUrl = "https://api.upbit.com/v1/ticker?markets=${market}-${symbol}"
+            val priceUrl = "https://api.upbit.com/v1/ticker?markets=${item.market}-${item.symbol}"
             val request = Request.Builder().url(priceUrl).build()
             val client = OkHttpClient()
             var priceStr: String = ""
 
-            if(timerCheck == 1){
-                cancel()
-            }
 
             client.newCall(request).enqueue(object : Callback {
 
@@ -186,21 +230,17 @@ class coinFragment() : Fragment() {
                             val CInfo = JSONArray(js)
                             val jsonObject = CInfo.getJSONObject(0)
                             var price = jsonObject.getString("trade_price")
+                            var newPrice = BigDecimal(price).toPlainString()
 
-                            priceStr += "${price} ${market}"
-                            println("가격정보")
-                            println(priceStr)
+                            priceStr += "${newPrice} ${item.market}"
+                            Log.d("가격정보", priceStr)
 
-                            activity?.runOnUiThread(Runnable {
-                                selectedList[ListCount].price = priceStr
-                                My_recyclerView.adapter?.notifyDataSetChanged()
-                            })
+                            selectedList[listCount].price = newPrice
 
                         } catch (e: JSONException) {
                             println("error")
                             println(e.printStackTrace())
-                        }
-                        finally {
+                        } finally {
                             // 연결 해제
                             response.body()?.close()
                             client.connectionPool().evictAll()
@@ -214,9 +254,6 @@ class coinFragment() : Fragment() {
                     println("Request Fail")
                 }
             })
-            /*println("가격정보2")
-        println(priceStr)
-        println("@@기격정보@@")*/
         }
     }
 }

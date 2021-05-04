@@ -5,6 +5,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.Settings.Global.putInt
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -107,7 +108,7 @@ class searchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        Log.d("서치체크","체크체크체크체크체크")
         JsonMake()
 
 /*        liveText.observe(this, Observer {
@@ -350,6 +351,16 @@ class searchFragment : Fragment() {
                 )
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        coin_list_KRW.clear()
+        coin_list_BTC.clear()
+        coin_list_ALL.clear()
+        coin_list_NULL.clear()
+        filteredList.clear()
+        selectedList.clear()
     }
 
 

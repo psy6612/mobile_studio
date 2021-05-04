@@ -17,5 +17,8 @@
     <string name="alarm_market_select_text">공지사항 알림 받을 거래소</string>
     <string name="coin_empty_text">지정한 코인이 없습니다</string>
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>
