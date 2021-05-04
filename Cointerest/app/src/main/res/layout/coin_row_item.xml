@@ -82,4 +82,31 @@
         app:layout_constraintEnd_toStartOf="@+id/coin_row_item_chart"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!--
+    <SlidingDrawer
+        android:id="@+id/slide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:allowSingleTap="true"
+        android:animateOnClick="true"
+        android:bottomOffset="5dp"
+        android:content="@+id/content"
+        android:handle="@+id/coin_row_item_layout"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="차트 들어갈곳" />
+        </FrameLayout>
+
+    </SlidingDrawer>
+-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

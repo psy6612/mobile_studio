@@ -13,17 +13,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.project.cointerest.Fragment.*
 import kotlinx.android.synthetic.main.fragment_search.*
-import java.lang.Exception
-import android.content.Intent
-import android.net.Uri
 
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     var coinFrag : Fragment = coinFragment()
     var backBtn : Long = 0
-
-    val upbitPackage = "com.dunamu.exchange" //업비트 앱 패키지 주소
-    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,15 +41,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return true
             }
             R.id.marketItem -> {
-                try {
-                    val intentupbit = packageManager.getLaunchIntentForPackage(upbitPackage)
-                    intent!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intentupbit)
-                } catch (e: Exception){
-                    val url = "market://details?id=$upbitPackage"
-                    val i = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    startActivity(i)
-                }
                 supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, marketFragment()).commitAllowingStateLoss()
 
                 return true

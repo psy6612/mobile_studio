@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.SlidingDrawer
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -99,7 +100,8 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
         }
         
         holder.itemView.coin_row_item_layout.setOnClickListener {
-            Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
+            val drawer :SlidingDrawer = (SlidingDrawer)findViewById(R.id.slide)
         }
 
         holder?.bind(selected[position], context)
