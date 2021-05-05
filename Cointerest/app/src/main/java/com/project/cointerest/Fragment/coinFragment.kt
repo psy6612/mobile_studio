@@ -73,19 +73,20 @@ class coinFragment() : Fragment() {
             while(isRunning){
                 newPriceSet()
                 if (itemPositionList.isNotEmpty()){
-                    runOnUiThread(UIClass())
+                    for (changePosition in itemPositionList) {
+                        runOnUiThread(UIClass(changePosition))
+                    }
+                    itemPositionList = mutableListOf<Int>()
                 }
                 SystemClock.sleep(2000)
             }
         }
     }
 
-    inner class UIClass() :Runnable {
+    inner class UIClass(val changePosition:Int) :Runnable {
         override fun run(){
-            for (changePosition in itemPositionList){
-                My_recyclerView.adapter?.notifyItemChanged(changePosition) // TODO Payload 추가하면 텍스트부분만 새로고침 할 수 있음
-            }
-            itemPositionList = mutableListOf<Int>()
+            My_recyclerView.adapter?.notifyItemChanged(changePosition) // TODO Payload 추가하면 텍스트부분만 새로고침 할 수 있음, 어댑터에서도 Payload 받아야함
+
         }
     }
 
