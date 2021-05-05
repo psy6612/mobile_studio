@@ -35,6 +35,8 @@ import kotlin.concurrent.timer
 import kotlin.math.pow
 
 
+
+
 class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>):
         RecyclerView.Adapter<CoinContentAdapter.Holder>() {
 
@@ -127,7 +129,8 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.itemView.coin_row_item_layout.setOnClickListener {
             //Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
-            val drawer :SlidingDrawer = (SlidingDrawer)findViewById(R.id.slide)
+            val drawer :SlidingDrawer = (SlidingDrawer).findViewById(R.id.slide)
+            drawer.animateClose()
         }
 
         holder.itemView.coin_row_item_price.addTextChangedListener(object : TextWatcher {

@@ -49,6 +49,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.github.lakue119:LakuePopupActivity:1.0.1' //팝업
     implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation "com.sothree.slidinguppanel:library:3.4.0" //차트 보여줄 drawerlayout
 
     //implementation 'com.github.bumptech.glide:glide:4.1.0'
     //annotationProcessor 'com.github.bumptech.glide:compiler:4.1.0'
