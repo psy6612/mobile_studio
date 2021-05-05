@@ -1,11 +1,13 @@
 package com.project.cointerest.Fragment
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -14,14 +16,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.*
 import com.project.cointerest.Adapter.CoinContentAdapter
 import com.scichart.core.utility.Dispatcher.runOnUiThread
+import kotlinx.android.synthetic.main.coin_row_item.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.selects.select
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONException
+import org.json.JSONObject
+import java.io.File
 import java.io.IOException
 import java.lang.Runnable
 import java.math.BigDecimal
+import java.net.URL
+import java.text.DateFormatSymbols
+import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.timer
 
 
 class coinFragment() : Fragment() {
@@ -29,7 +39,7 @@ class coinFragment() : Fragment() {
     lateinit var My_recyclerView: RecyclerView
     lateinit var emptyView: ConstraintLayout
     var selectedList = ArrayList<CoinInfo>()
-    var itemPositionList = mutableListOf<Int>() // 바뀐 가격 저장 리스트
+
     var runCheck =0 //같은 코인의 타이머 중복동작 방지
     var timerCheck = 0 // 타이머를 정지하기위한 변수
 
@@ -71,22 +81,16 @@ class coinFragment() : Fragment() {
     inner class ThreadClass:Thread(){
         override fun run(){
             while(isRunning){
-                newPriceSet()
-                if (itemPositionList.isNotEmpty()){
-                    for (changePosition in itemPositionList) {
-                        runOnUiThread(UIClass(changePosition))
-                    }
-                    itemPositionList = mutableListOf<Int>()
-                }
+                runOnUiThread(UIClass())
                 SystemClock.sleep(2000)
             }
         }
     }
 
-    inner class UIClass(val changePosition:Int) :Runnable {
+    inner class UIClass:Runnable{
         override fun run(){
-            My_recyclerView.adapter?.notifyItemChanged(changePosition) // TODO Payload 추가하면 텍스트부분만 새로고침 할 수 있음, 어댑터에서도 Payload 받아야함
-
+            newPriceSet()
+            My_recyclerView.adapter?.notifyDataSetChanged() //Todo 매우 무거움. diffutil로 수정할 예정
         }
     }
 
@@ -205,9 +209,8 @@ class coinFragment() : Fragment() {
     }
 
 
-    fun newPriceSet() {
+    fun newPriceSet(){
         println("newPriceSet")
-
         for((listCount, item) in selectedList.withIndex()) {
             Log.d("카운터","${listCount} - ${selectedList[listCount].symbol}")
 
@@ -231,20 +234,20 @@ class coinFragment() : Fragment() {
 
                             priceStr += "${newPrice} ${item.market}"
                             Log.d("가격정보", priceStr)
-                            if (selectedList[listCount].price != newPrice){
-                                selectedList[listCount].price = newPrice
-                                itemPositionList.add(listCount)
-                            }
+
+                            selectedList[listCount].price = priceStr
+
                         } catch (e: JSONException) {
                             println("error")
                             println(e.printStackTrace())
+                        } finally {
+                            // 연결 해제
+                            response.body()?.close()
+                            client.connectionPool().evictAll()
                         }
                     } else {
                         println("Not Successful")
                     }
-                    // 연결 해제
-                    response.body()?.close()
-                    client.connectionPool().evictAll()
                 }
 
                 override fun onFailure(call: Call, e: IOException) {
