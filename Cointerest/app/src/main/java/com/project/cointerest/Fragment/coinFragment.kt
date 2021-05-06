@@ -36,7 +36,7 @@ import kotlin.concurrent.timer
 
 class coinFragment() : Fragment() {
 
-    lateinit var My_recyclerView: RecyclerView
+    lateinit var my_recyclerView: RecyclerView
     //lateinit var Price_recyclerView : RecyclerView
     lateinit var emptyView: ConstraintLayout
     var selectedList = ArrayList<CoinInfo>()
@@ -46,7 +46,8 @@ class coinFragment() : Fragment() {
     var timerCheck = 0 // 타이머를 정지하기위한 변수
 
     private var isRunning=true
-    val thread=ThreadClass()
+
+    val thread by lazy {ThreadClass()}
 
 
     override fun onDestroyView() {
@@ -63,21 +64,19 @@ class coinFragment() : Fragment() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        thread.start()
+
         DataAdd()
 
         Log.d("싸이즈","${selectedList.size}")
 
         println("코인프래그먼트 체크")
 
-
         var rootView = inflater.inflate(R.layout.fragment_coin, container, false)
-        My_recyclerView = rootView.findViewById(R.id.coin_content_view!!) as RecyclerView
+        my_recyclerView = rootView.findViewById(R.id.coin_content_view!!) as RecyclerView
         emptyView = rootView.findViewById(R.id.coin_content_empty_view!!) as ConstraintLayout;
-        My_recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        My_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList)
-
-
+        my_recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        my_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList)
+        thread.start()
         return rootView
     }
 
@@ -87,24 +86,20 @@ class coinFragment() : Fragment() {
             while(isRunning){
                 newPriceSet()
                 if (itemPositionList.isNotEmpty()){
-                    for (changePosition in itemPositionList) {
-                        runOnUiThread(UIClass(changePosition))
+                    runOnUiThread {
+                        for (changePosition in itemPositionList) {
+                            Log.d("가격변동체크", "${changePosition}번째 변동됨")
+                            my_recyclerView.adapter?.notifyItemChanged(changePosition, "Price")
+                            //My_recyclerView.adapter?.notifyItemChanged(0,"@@@") // TODO Payload 추가하면 텍스트부분만 새로고침 할 수 있음, 어댑터에서도 Payload 받아야함
+                        }
                     }
                     itemPositionList = mutableListOf<Int>()
                 }
-                Log.d("once", "체크체크!") //Todo 2초마다 한바퀴만 휴대폰에서만 돌아야하는데 4-5바퀴 돔, 에뮬레이터에서는 정상
                 SystemClock.sleep(2000)
             }
         }
     }
 
-    inner class UIClass(val changePosition:Int) :Runnable {
-        override fun run(){
-            Log.d("가격변동체크", "${changePosition}번째 변동됨")
-            My_recyclerView.adapter?.notifyItemChanged(changePosition, "Price")
-            //My_recyclerView.adapter?.notifyItemChanged(0,"@@@") // TODO Payload 추가하면 텍스트부분만 새로고침 할 수 있음, 어댑터에서도 Payload 받아야함
-         }
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -192,13 +187,13 @@ class coinFragment() : Fragment() {
 
                         activity?.runOnUiThread(Runnable {
 
-                            My_recyclerView.adapter?.notifyDataSetChanged() //Todo
+                            my_recyclerView.adapter?.notifyDataSetChanged() //Todo
 
                             if (selectedList.isEmpty()) {
-                                My_recyclerView.visibility = View.GONE
+                                my_recyclerView.visibility = View.GONE
                                 emptyView.visibility = View.VISIBLE
                             } else {
-                                My_recyclerView.visibility = View.VISIBLE
+                                my_recyclerView.visibility = View.VISIBLE
                                 emptyView.visibility = View.GONE
                             }
                         })
@@ -248,7 +243,7 @@ class coinFragment() : Fragment() {
 
 
                             priceStr += "${newPrice} ${item.market}"
-                            Log.d("가격정보", priceStr)
+                            Log.d("수신가격", "${item.symbol} ${priceStr}")
 
                             if(priceStr != selectedList[listCount].price){
                                 itemPositionList.add(listCount)
