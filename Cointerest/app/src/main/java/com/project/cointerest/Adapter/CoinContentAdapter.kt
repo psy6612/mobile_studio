@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Paint
+import android.service.voice.AlwaysOnHotwordDetector
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
@@ -17,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -45,29 +47,6 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
     fun getItem(position: Int) = diffUtil.currentList[position]
 
 
-/*    private val asyncDiffer = AsyncListDiffer(this, DiffCallback())
-
-
-    fun replaceItems(newPeople: List<CoinInfo>) {
-        asyncDiffer.submitList(newPeople)
-    }*/
-
-
-
-    //선택한 아이템리스트
-    //var selectedList = ArrayList<CoinData>()
-
-
-    // var btn : Button = findViewById(R.id.search_searchView)
-
-/*    //클릭 인터페이스  정의
-    interface ItemClickListener {
-        fun onClick(view: View, position: Int)
-    }
-
-    //클릭리스너 선언
-    private lateinit var itemClickListner: ItemClickListener*/
-
     override fun getItemCount(): Int = selected.size
 
 
@@ -81,11 +60,11 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
 
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
-        val C_image = itemView?.findViewById<ImageView>(R.id.coin_row_item_image)
-        val C_kor = itemView?.findViewById<TextView>(R.id.coin_row_item_name)
-        val C_symbol = itemView?.findViewById<TextView>(R.id.coin_row_item_eng)
+        val c_image = itemView?.findViewById<ImageView>(R.id.coin_row_item_image)
+        val c_kor = itemView?.findViewById<TextView>(R.id.coin_row_item_name)
+        val c_symbol = itemView?.findViewById<TextView>(R.id.coin_row_item_eng)
 //        val C_market = itemView?.findViewById<TextView>(R.id.Market)
-        var C_price = itemView?.findViewById<TextView>(R.id.coin_row_item_price)
+        var c_price = itemView?.findViewById<TextView>(R.id.coin_row_item_price)
         var Price_str = ""
 
         fun bind(coin: CoinInfo, context: Context) {
@@ -100,14 +79,15 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
                     url = URL("https://static.upbit.com/logos/${coin.coin_image}.png")
                 }
                 var bitmap: Bitmap = image_task.execute().get()
-                C_image?.setImageBitmap(bitmap)
+                c_image?.setImageBitmap(bitmap)
 
             } else {
-                C_image?.setImageResource(R.mipmap.ic_launcher)
+                c_image?.setImageResource(R.mipmap.ic_launcher)
             }
-            C_kor?.text = coin.kor_name
-            C_symbol?.text = coin.symbol
-            C_price?.text = coin.price
+
+            c_kor?.text = coin.kor_name
+            c_symbol?.text = coin.symbol
+            c_price?.text = coin.price
             //C_market?.text = coin.market
 
             itemView.coin_row_item_chart.setOnClickListener {
@@ -124,6 +104,7 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
+
         holder.itemView.coin_row_item_layout.setOnClickListener {
             Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
         }

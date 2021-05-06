@@ -37,8 +37,10 @@ import kotlin.concurrent.timer
 class coinFragment() : Fragment() {
 
     lateinit var My_recyclerView: RecyclerView
+    //lateinit var Price_recyclerView : RecyclerView
     lateinit var emptyView: ConstraintLayout
     var selectedList = ArrayList<CoinInfo>()
+    var itemPositionList = mutableListOf<Int>() // 바뀐 가격 저장 리스트
 
     var runCheck =0 //같은 코인의 타이머 중복동작 방지
     var timerCheck = 0 // 타이머를 정지하기위한 변수
@@ -49,6 +51,7 @@ class coinFragment() : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        isRunning=false
     }
 
     override fun onCreateView(
@@ -74,6 +77,7 @@ class coinFragment() : Fragment() {
         My_recyclerView.layoutManager = LinearLayoutManager(requireContext())
         My_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList)
 
+
         return rootView
     }
 
@@ -81,21 +85,30 @@ class coinFragment() : Fragment() {
     inner class ThreadClass:Thread(){
         override fun run(){
             while(isRunning){
-                runOnUiThread(UIClass())
+                newPriceSet()
+                if (itemPositionList.isNotEmpty()){
+                    for (changePosition in itemPositionList) {
+                        runOnUiThread(UIClass(changePosition))
+                    }
+                    itemPositionList = mutableListOf<Int>()
+                }
+                Log.d("once", "체크체크!") //Todo 2초마다 한바퀴만 휴대폰에서만 돌아야하는데 4-5바퀴 돔, 에뮬레이터에서는 정상
                 SystemClock.sleep(2000)
             }
         }
     }
 
-    inner class UIClass:Runnable{
+    inner class UIClass(val changePosition:Int) :Runnable {
         override fun run(){
-            newPriceSet()
-            My_recyclerView.adapter?.notifyDataSetChanged() //Todo 매우 무거움. diffutil로 수정할 예정
-        }
+            Log.d("가격변동체크", "${changePosition}번째 변동됨")
+            My_recyclerView.adapter?.notifyItemChanged(changePosition, "Price")
+            //My_recyclerView.adapter?.notifyItemChanged(0,"@@@") // TODO Payload 추가하면 텍스트부분만 새로고침 할 수 있음, 어댑터에서도 Payload 받아야함
+         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("destroy","체크")
         isRunning=false
     }
 
@@ -109,16 +122,16 @@ class coinFragment() : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        timerCheck = 0
+        //timerCheck = 0
+        isRunning = true
        // selectedList.clear()
-        if(runCheck == 0) {
-            //DataAdd()
-        }
     }
     override fun onPause() {
         super.onPause()
         timerCheck = 1
         runCheck = 0
+
+        isRunning = false
     }
 
     //ToDo 메인에서 시세 보여주는거는 타이머로 쓰고 목표가 도달해서 알람하는건 WorkManager 또는 서버에서 처리하도록 구현
@@ -232,8 +245,14 @@ class coinFragment() : Fragment() {
                             var price = jsonObject.getString("trade_price")
                             var newPrice = BigDecimal(price).toPlainString()
 
+
+
                             priceStr += "${newPrice} ${item.market}"
                             Log.d("가격정보", priceStr)
+
+                            if(priceStr != selectedList[listCount].price){
+                                itemPositionList.add(listCount)
+                            }
 
                             selectedList[listCount].price = priceStr
 
