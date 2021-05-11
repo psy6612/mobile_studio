@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Paint
+import android.media.Image
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
@@ -14,10 +15,7 @@ import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.SlidingDrawer
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +31,7 @@ import java.net.URL
 import java.util.Collections.addAll
 import kotlin.concurrent.timer
 import kotlin.math.pow
+//import kotlinx.android.synthetic.main.coin_row_item.chart_mini
 
 
 
@@ -128,9 +127,11 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.itemView.coin_row_item_layout.setOnClickListener {
-            //Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
-            val drawer :SlidingDrawer = (SlidingDrawer).findViewById(R.id.slide)
-            drawer.animateClose()
+            Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
+            //val drawer :SlidingDrawer = (SlidingDrawer).findViewById(R.id.slide)
+            //drawer.animateClose()
+            var chart_mini = holder.itemView.mini_chart
+            chart_mini.visibility=View.VISIBLE
         }
 
         holder.itemView.coin_row_item_price.addTextChangedListener(object : TextWatcher {
