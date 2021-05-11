@@ -1,6 +1,10 @@
 package com.project.cointerest
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -21,9 +25,47 @@ class ChartView : AppCompatActivity() {
         var str = intent.getStringExtra("coin")
         println(str)
         chart_name.text = str
-        chart_webview.loadUrl("http://3.35.174.63/chart.php?coin=${str}")
+        chart_webview.loadUrl("http://3.35.13.50//chart.php?coin=${str}")
         back_btn.setOnClickListener {
             finishAndRemoveTask()
+        }
+        trade_btn.setOnClickListener {
+            var isMarket :Boolean?
+
+            isMarket = isInstalledApp("com.dunamu.exchange")
+            println(isMarket)
+            //"com.dunamu.exchange" 업비트 코리아
+            //"com.dunamu.exchange.global" 업비트 그로벌
+
+            if(isMarket == true){
+                openApp("com.dunamu.exchange")
+            }
+            else{
+                market("com.dunamu.exchange")
+            }
+        }
+    }
+
+    // 앱이 설치 설치되었는지 판단하는 함수
+    fun Context.isInstalledApp(packageName: String): Boolean {
+        val intent = packageManager.getLaunchIntentForPackage(packageName)
+        return intent != null
+    }
+    // 특정 앱을 실행하는 함수
+    fun Context.openApp(packageName: String) {
+        val intent = packageManager.getLaunchIntentForPackage(packageName)
+        startActivity(intent)
+    }
+    // 마켓으로 이동하는 함수
+    fun Context.market(packageName: String): Boolean {
+        return try {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("market://details?id=$packageName")
+            startActivity(intent)
+            true
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+            false
         }
     }
 }
