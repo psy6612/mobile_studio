@@ -5,13 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.Paint
-import android.service.voice.AlwaysOnHotwordDetector
 import android.text.Editable
-import android.text.SpannableString
 import android.text.TextWatcher
-import android.text.method.TextKeyListener.clear
-import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +16,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.project.cointerest.ChartView
 import com.project.cointerest.CoinInfo
@@ -31,8 +26,7 @@ import kotlinx.android.synthetic.main.fragment_coin.*
 import kotlinx.android.synthetic.main.fragment_coin.view.*
 import okhttp3.*
 import java.net.URL
-import java.util.Collections.addAll
-import kotlin.concurrent.timer
+import java.util.*
 import kotlin.math.pow
 
 
@@ -103,7 +97,20 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(
+        holder: Holder,
+        position: Int
+        ) {
+
+/*        if(payloads.isNotEmpty()){
+            var priceView = holder.itemView.coin_row_item_price
+            val textHolder: Holder = holder as Holder
+           // textHolder.Price_str
+            Log.d("가격변동체크Adapter","${payloads.toString()}")
+//            priceView.setText(coin.price)
+
+
+        }*/
 
         holder.itemView.coin_row_item_layout.setOnClickListener {
             Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
@@ -111,6 +118,7 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
             //drawer.animateClose()
             var chart_mini = holder.itemView.mini_chart
             chart_mini.visibility=View.VISIBLE
+
         }
 
         holder.itemView.coin_row_item_price.addTextChangedListener(object : TextWatcher {
@@ -118,53 +126,53 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
             var upColor = Color.parseColor("#B22222")
             var downColor = Color.parseColor("#4169E1")
             var normalColor = Color.GRAY
-            var priceBeforeChange : Float? = null
-            var priceAfterChange : Float? = null
+            var priceBeforeChange: Float? = null
+            var priceAfterChange: Float? = null
             override fun afterTextChanged(s: Editable?) {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (s.toString().contains("E") && s.toString().contains("KRW")){
+                if (s.toString().contains("E") && s.toString().contains("KRW")) {
                     var digits = s.toString().split("E")[1].split("KRW")[0].toFloatOrNull()
-                    val ten : Float = 10.0F
+                    val ten: Float = 10.0F
                     if (digits != null) {
                         digits = ten.pow(digits)
                     }
                     priceBeforeChange = s.toString().split("E")[0].toFloatOrNull()?.times(digits!!)
-                }
-                else if (priceView.text.toString().contains("KRW")){
+                } else if (priceView.text.toString().contains("KRW")) {
                     priceBeforeChange = s.toString().split("KRW")[0].toFloatOrNull()
-                }
-                else {
+                } else {
                     priceBeforeChange = s.toString().split("BTC")[0].toFloatOrNull()
                 }
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (priceView.text.toString().contains("E") && priceView.text.toString().contains("KRW")){
-                    var digits = priceView.text.toString().toString().split("E")[1].split("KRW")[0].toFloatOrNull()
-                    val ten : Float = 10.0F
+                if (priceView.text.toString().contains("E") && priceView.text.toString()
+                        .contains("KRW")
+                ) {
+                    var digits = priceView.text.toString().toString()
+                        .split("E")[1].split("KRW")[0].toFloatOrNull()
+                    val ten: Float = 10.0F
                     if (digits != null) {
                         digits = ten.pow(digits!!)
                     }
-                    priceAfterChange = priceView.text.toString().split("E")[0].toFloatOrNull()?.times(digits!!)
-                }
-                else if (priceView.text.toString().contains("KRW")){
-                    priceAfterChange =priceView.text.toString().split("KRW")[0].toFloatOrNull()
-                }
-                else {
-                    priceAfterChange =priceView.text.toString().split("BTC")[0].toFloatOrNull()
+                    priceAfterChange =
+                        priceView.text.toString().split("E")[0].toFloatOrNull()?.times(
+                            digits!!
+                        )
+                } else if (priceView.text.toString().contains("KRW")) {
+                    priceAfterChange = priceView.text.toString().split("KRW")[0].toFloatOrNull()
+                } else {
+                    priceAfterChange = priceView.text.toString().split("BTC")[0].toFloatOrNull()
                 }
                 if (priceBeforeChange != null && priceAfterChange != null) {
                     if (priceAfterChange!! > priceBeforeChange!!) {
                         //priceView.paintFlags = priceView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
                         priceView.setTextColor(upColor)
-                    }
-                    else if (priceAfterChange!! < priceBeforeChange!!) {
+                    } else if (priceAfterChange!! < priceBeforeChange!!) {
                         //priceView.paintFlags = priceView.paintFlags or Paint.UNDERLINE_TEXT_FLAG
                         priceView.setTextColor(downColor)
-                    }
-                    else{
+                    } else {
                         Thread.sleep(100)
                         priceView.setTextColor(normalColor)
                         //priceView.paintFlags = priceView.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv()
@@ -180,6 +188,11 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
 
         }*/
     }
+
+/*    override fun onBindViewHolder(holder: Holder, position: Int) {
+        TODO("Not yet implemented")
+    }*/
+
 
 }
 

@@ -29,12 +29,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_main)
-
-        println("GO")
         tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
-
         supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, coinFragment()).commit()
+
     }
 
 
