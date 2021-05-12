@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.messaging.FirebaseMessaging
 import com.project.cointerest.*
 import com.project.cointerest.Adapter.CoinContentAdapter
 import com.scichart.core.utility.Dispatcher.runOnUiThread
@@ -76,6 +77,7 @@ class coinFragment() : Fragment() {
         coinDataModel =CoinDataModel()
 
 
+
         DataAdd()
         coinDataModel.newPriceSet(selectedList, itemPositionList)
         Log.d("싸이즈","${selectedList.size}")
@@ -94,13 +96,9 @@ class coinFragment() : Fragment() {
     inner class ThreadClass:Thread(){
         override fun run(){
             while(isRunning){
-//                newPriceSet()
                 try {
-                    SystemClock.sleep(2000)
 
                     coinDataModel.newPriceSet(selectedList, itemPositionList)
-
-                    //my_recyclerView.adapter?.notifyItemChanged(0,"Price")
                     if (itemPositionList.isNotEmpty()) {
                         Log.d("itemPositionList2", "${itemPositionList.size}")
                         runOnUiThread {
@@ -117,16 +115,14 @@ class coinFragment() : Fragment() {
                     } else {
                         Log.d("emptyItem", "비었음")
                     }
-//                isRunning = false
+                    SystemClock.sleep(2000)
                 }
                 catch(e : Exception){
                     e.printStackTrace()
                 }
-//                isRunning = true
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
