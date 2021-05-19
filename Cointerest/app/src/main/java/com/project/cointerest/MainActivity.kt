@@ -19,6 +19,7 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.chart_view.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
@@ -29,21 +30,18 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        FirebaseMessaging.getInstance().subscribeToTopic("test")
+
         setContentView(R.layout.activity_main)
-
-        println("GO")
         tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
-
         supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager, coinFragment()).commit()
+
     }
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.coinItem -> {
-                //Todo ★★★★★프래그먼트 최적화★★★★★ 원인은 notifyDataSetChanged() 이게 매우 무겁다
-                //Todo diffutil을 써보자
-
                 supportFragmentManager.beginTransaction().replace(R.id.vp_ac_main_frag_pager , coinFragment()).commit()
                 return true
             }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "533539994446",
+    "project_id": "fcmtest-219cb",
+    "storage_bucket": "fcmtest-219cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533539994446:android:5c92de55d4539eb7d37c1f",
+        "android_client_info": {
+          "package_name": "com.project.cointerest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533539994446-0e0pt5lsiajf3dk9h7ohc0bcthv6e5l2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_hHbh5RrVTALOiR6Ym-wbd-rsiYiLibc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533539994446-0e0pt5lsiajf3dk9h7ohc0bcthv6e5l2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

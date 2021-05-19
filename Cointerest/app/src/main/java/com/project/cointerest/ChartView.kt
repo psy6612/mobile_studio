@@ -25,7 +25,8 @@ class ChartView : AppCompatActivity() {
         var str = intent.getStringExtra("coin")
         println(str)
         chart_name.text = str
-        chart_webview.loadUrl("http://3.35.13.50//chart.php?coin=${str}")
+        chart_webview.loadUrl("http://54.180.134.53/chart.php?coin=${str}")
+
         back_btn.setOnClickListener {
             finishAndRemoveTask()
         }
@@ -38,12 +39,22 @@ class ChartView : AppCompatActivity() {
             //"com.dunamu.exchange.global" 업비트 그로벌
 
             if(isMarket == true){
-                openApp("com.dunamu.exchange")
+                openApp("com.dunamu.exchange.order?code=CRIX.UPBIT.KRW-BTC&exchangeCode=kr")
             }
             else{
                 market("com.dunamu.exchange")
             }
         }
+
+        goal_btn.setOnClickListener {
+            //Todo DB에 목표가정보 전송
+
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     // 앱이 설치 설치되었는지 판단하는 함수

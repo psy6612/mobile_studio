@@ -11,8 +11,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.messaging.FirebaseMessaging
 import com.project.cointerest.*
 import com.project.cointerest.Adapter.CoinContentAdapter
 import com.scichart.core.utility.Dispatcher.runOnUiThread
@@ -34,13 +37,18 @@ import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
 
 
-class coinFragment() : Fragment() {
+//Todo isRunning말고 LifecycleOwner로
 
+//Todo 그리고 newPriceSet, DataAdd이거는 모델 따로 만들기
+
+//Todo 시세 알람용 수신 코드는 서버 따로 만들어서 거기서 구현(웹소켓)
+
+class coinFragment() : Fragment() {
+    var itemPositionList = mutableSetOf<Int>() // 바뀐 가격 저장 SET
     lateinit var my_recyclerView: RecyclerView
     //lateinit var Price_recyclerView : RecyclerView
     lateinit var emptyView: ConstraintLayout
     var selectedList = ArrayList<CoinInfo>()
-    var itemPositionList = mutableListOf<Int>() // 바뀐 가격 저장 리스트
 
     var runCheck =0 //같은 코인의 타이머 중복동작 방지
     var timerCheck = 0 // 타이머를 정지하기위한 변수
@@ -48,6 +56,8 @@ class coinFragment() : Fragment() {
     private var isRunning=true
 
     val thread by lazy {ThreadClass()}
+
+    private lateinit var coinDataModel : CoinDataModel
 
 
     override fun onDestroyView() {
@@ -64,13 +74,15 @@ class coinFragment() : Fragment() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        coinDataModel =CoinDataModel()
+
+
 
         DataAdd()
-
+        coinDataModel.newPriceSet(selectedList, itemPositionList)
         Log.d("싸이즈","${selectedList.size}")
 
         println("코인프래그먼트 체크")
-
         var rootView = inflater.inflate(R.layout.fragment_coin, container, false)
         my_recyclerView = rootView.findViewById(R.id.coin_content_view!!) as RecyclerView
         emptyView = rootView.findViewById(R.id.coin_content_empty_view!!) as ConstraintLayout;
@@ -84,41 +96,52 @@ class coinFragment() : Fragment() {
     inner class ThreadClass:Thread(){
         override fun run(){
             while(isRunning){
-                newPriceSet()
-                if (itemPositionList.isNotEmpty()){
-                    runOnUiThread {
-                        for (changePosition in itemPositionList) {
-                            Log.d("가격변동체크", "${changePosition}번째 변동됨")
-                            my_recyclerView.adapter?.notifyItemChanged(changePosition, "Price")
-                            //My_recyclerView.adapter?.notifyItemChanged(0,"@@@") // TODO Payload 추가하면 텍스트부분만 새로고침 할 수 있음, 어댑터에서도 Payload 받아야함
+                try {
+
+                    coinDataModel.newPriceSet(selectedList, itemPositionList)
+                    if (itemPositionList.isNotEmpty()) {
+                        Log.d("itemPositionList2", "${itemPositionList.size}")
+                        runOnUiThread {
+                            for (changePosition in itemPositionList) {
+                                Log.d("가격변동체크", "${changePosition}번째 변동됨")
+
+                                my_recyclerView.adapter?.notifyItemChanged(changePosition, "Price")
+                                //My_recyclerView.adapter?.notifyItemChanged(0,"@@@") // TODO Payload 추가하면 텍스트부분만 새로고침 할 수 있음, 어댑터에서도 Payload 받아야함
+                            }
+                            itemPositionList = mutableSetOf<Int>()
+//                        my_recyclerView.adapter?.notifyDataSetChanged()
                         }
+
+                    } else {
+                        Log.d("emptyItem", "비었음")
                     }
-                    itemPositionList = mutableListOf<Int>()
+                    SystemClock.sleep(2000)
                 }
-                SystemClock.sleep(2000)
+                catch(e : Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("destroy","체크")
         isRunning=false
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        isRunning = true
         //println("코인프래그먼트 체크2")
         //My_recyclerView.adapter = CoinContentAdapter(requireContext(), selectedList)
     }
 
     override fun onResume() {
         super.onResume()
-        //timerCheck = 0
         isRunning = true
+        Log.d("Resume체크","${isRunning}")
+        //timerCheck = 0
        // selectedList.clear()
     }
     override fun onPause() {
@@ -217,7 +240,7 @@ class coinFragment() : Fragment() {
     }
 
 
-    fun newPriceSet(){
+/*    fun newPriceSet(){
         println("newPriceSet")
         for((listCount, item) in selectedList.withIndex()) {
             Log.d("카운터","${listCount} - ${selectedList[listCount].symbol}")
@@ -239,7 +262,6 @@ class coinFragment() : Fragment() {
                             val jsonObject = CInfo.getJSONObject(0)
                             var price = jsonObject.getString("trade_price")
                             var newPrice = BigDecimal(price).toPlainString()
-
 
 
                             priceStr += "${newPrice} ${item.market}"
@@ -269,5 +291,5 @@ class coinFragment() : Fragment() {
                 }
             })
         }
-    }
+    }*/
 }

@@ -16,7 +16,8 @@
     <string name="basic_market_select_text">기본거래소 지정</string>
     <string name="alarm_market_select_text">공지사항 알림 받을 거래소</string>
     <string name="coin_empty_text">지정한 코인이 없습니다</string>
-
+    <string name="default_notification_channel_id">Channel ID</string>
+    <string name="default_notification_channel_name" translatable="true">Test</string>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
     </style>
