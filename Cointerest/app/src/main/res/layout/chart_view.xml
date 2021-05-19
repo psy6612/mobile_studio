@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:text="뒤로가기"
+                android:text="@string/back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,7 @@
                 android:layout_marginEnd="28dp"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="sans-serif"
-                android:text="심볼-마켓"
+                android:text="@string/chart_name"
                 android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,8 +52,8 @@
                 android:id="@+id/trade_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="거래소이동"
+                android:layout_marginStart="10dp"
+                android:text="@string/to_market"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toRightOf="@id/back_btn"
@@ -76,44 +76,124 @@
             android:layout_height="233dp"
             android:layout_weight="0.1">
 
-            <Button
-                android:id="@+id/goal_btn"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/target_button_layout"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="5dp"
-                android:text="추가하기"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/input_goal" />
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Button
+                    android:id="@+id/goal_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="@string/add_text" />
+
+                <Button
+                    android:id="@+id/edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:backgroundTint="@color/gray_600"
+                    android:text="@string/edit_text"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/delete_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:backgroundTint="@color/gray_600"
+                    android:text="@string/delete_text"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/target_list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/text_target_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/notosanskrblack"
+                    android:text="@string/target_desc_text"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/target_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:entries="@array/spinnerItems"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/set_price_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/notosanskrbold"
+                android:text="@string/set_price_example"
+                android:textColor="@color/purple_500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/target_list_layout" />
+
+            <EditText
+                android:id="@+id/set_price_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/input_goal"
-                android:layout_width="90dp"
+                android:layout_width="0dp"
                 android:layout_height="49dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
                 android:ems="10"
-                android:hint="ex) +1.5"
+                android:hint="@string/goal_hint_text"
                 android:inputType="numberSigned|numberDecimal"
+                android:textAlignment="textEnd"
                 android:textColorHint="#00000000"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/goal_btn"
+                app:layout_constraintBaseline_toBaselineOf="@id/minus_btn"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/minus_btn" />
 
             <Button
                 android:id="@+id/plus_minus_btn"
                 android:layout_width="45dp"
                 android:layout_height="52dp"
-                android:layout_marginStart="11dp"
-                android:layout_marginBottom="5dp"
-                android:textSize="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/gray_700"
+                android:textSize="24sp"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/plus_btn"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/set_price_btn"
                 tools:text="±"
                 tools:visibility="visible" />
 
@@ -122,11 +202,11 @@
                 android:layout_width="45dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="11dp"
-                android:layout_marginBottom="5dp"
-                android:text="+"
-                android:textSize="24dp"
+                android:backgroundTint="@color/gray_500"
+                android:text="@string/plus"
+                android:textSize="24sp"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/plus_minus_btn"
                 app:layout_constraintEnd_toStartOf="@+id/minus_btn"
                 app:layout_constraintStart_toEndOf="@+id/plus_minus_btn"
                 tools:visibility="visible" />
@@ -136,12 +216,26 @@
                 android:layout_width="45dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="11dp"
-                android:layout_marginBottom="5dp"
-                android:text="-"
-                android:textSize="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:backgroundTint="@color/gray_500"
+                android:text="@string/minus"
+                android:textSize="24sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/plus_btn"
                 app:layout_constraintEnd_toStartOf="@+id/input_goal"
                 app:layout_constraintStart_toEndOf="@+id/plus_btn" />
+
+            <TextView
+                android:id="@+id/target_price_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/notosanskrbold"
+                android:text="@string/target_price_text_example"
+                android:textColor="@color/teal_700"
+                app:layout_constraintBottom_toTopOf="@+id/target_button_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/input_goal" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
