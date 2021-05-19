@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.project.cointerest.Fragment.marketFragment
 
 
 class FireBaseMessagingService : FirebaseMessagingService() {
@@ -37,7 +38,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendNotification(messageBody: String?) {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, marketFragment::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent,

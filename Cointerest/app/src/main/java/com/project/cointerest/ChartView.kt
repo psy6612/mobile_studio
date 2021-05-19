@@ -25,7 +25,7 @@ class ChartView : AppCompatActivity() {
         var str = intent.getStringExtra("coin")
         println(str)
         chart_name.text = str
-        chart_webview.loadUrl("http://13.125.215.236/chart.php?coin=${str}")
+        chart_webview.loadUrl("http://54.180.134.53/chart.php?coin=${str}")
 
         back_btn.setOnClickListener {
             finishAndRemoveTask()
@@ -45,7 +45,13 @@ class ChartView : AppCompatActivity() {
                 market("com.dunamu.exchange")
             }
         }
+
+        goal_btn.setOnClickListener {
+            //Todo DB에 목표가정보 전송
+
+        }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
