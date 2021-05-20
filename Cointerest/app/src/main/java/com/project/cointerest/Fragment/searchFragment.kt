@@ -178,6 +178,7 @@ class searchFragment : Fragment() {
 
             //ToDo 데이터 저장
             //Todo 이 코드는 위험하다. 상폐되면 쓰레기가 생김 for말고 다른방법으로 수정하기
+
             for(item in selectedList){
                 App.prefs.setString("${item.symbol}-${item.market}","${item.kor_name}-${item.coin_image}-${item.symbol}-${item.market}")
             }

@@ -89,7 +89,7 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
                 Toast.makeText(context, "차트 클릭 체크", Toast.LENGTH_SHORT).show()
 
                 Intent(context, ChartView::class.java).apply {
-                    putExtra("coin", "${coin.symbol}${coin.market}")
+                    putExtra("coin", "${coin.symbol}-${coin.market}")
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run { context.startActivity(this) }
             }

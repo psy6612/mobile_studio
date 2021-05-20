@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        FirebaseMessaging.getInstance().subscribeToTopic("test")
+        //FirebaseMessaging.getInstance().subscribeToTopic("test")
 
         setContentView(R.layout.activity_main)
         tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)

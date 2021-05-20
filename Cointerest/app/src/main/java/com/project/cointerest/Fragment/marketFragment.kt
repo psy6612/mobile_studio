@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import com.project.cointerest.R
 
 
@@ -20,6 +21,7 @@ class marketFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        FirebaseMessaging.getInstance().subscribeToTopic("test")
         return inflater.inflate(R.layout.fragment_market, container, false)
     }
 

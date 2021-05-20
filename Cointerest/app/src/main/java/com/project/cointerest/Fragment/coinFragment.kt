@@ -149,7 +149,7 @@ class coinFragment() : Fragment() {
         timerCheck = 1
         runCheck = 0
 
-        isRunning = false
+        //isRunning = false
     }
 
     //ToDo 메인에서 시세 보여주는거는 타이머로 쓰고 목표가 도달해서 알람하는건 WorkManager 또는 서버에서 처리하도록 구현
@@ -238,58 +238,4 @@ class coinFragment() : Fragment() {
         runCheck = 1
         return
     }
-
-
-/*    fun newPriceSet(){
-        println("newPriceSet")
-        for((listCount, item) in selectedList.withIndex()) {
-            Log.d("카운터","${listCount} - ${selectedList[listCount].symbol}")
-
-            val priceUrl = "https://api.upbit.com/v1/ticker?markets=${item.market}-${item.symbol}"
-            val request = Request.Builder().url(priceUrl).build()
-            val client = OkHttpClient()
-            var priceStr: String = ""
-
-
-            client.newCall(request).enqueue(object : Callback {
-
-                override fun onResponse(call: Call, response: Response) {
-                    if (response.isSuccessful) {
-                        val js = response?.body()?.string()
-                        //println(js)
-                        try {
-                            val CInfo = JSONArray(js)
-                            val jsonObject = CInfo.getJSONObject(0)
-                            var price = jsonObject.getString("trade_price")
-                            var newPrice = BigDecimal(price).toPlainString()
-
-
-                            priceStr += "${newPrice} ${item.market}"
-                            Log.d("수신가격", "${item.symbol} ${priceStr}")
-
-                            if(priceStr != selectedList[listCount].price){
-                                itemPositionList.add(listCount)
-                            }
-
-                            selectedList[listCount].price = priceStr
-
-                        } catch (e: JSONException) {
-                            println("error")
-                            println(e.printStackTrace())
-                        } finally {
-                            // 연결 해제
-                            response.body()?.close()
-                            client.connectionPool().evictAll()
-                        }
-                    } else {
-                        println("Not Successful")
-                    }
-                }
-
-                override fun onFailure(call: Call, e: IOException) {
-                    println("Request Fail")
-                }
-            })
-        }
-    }*/
 }

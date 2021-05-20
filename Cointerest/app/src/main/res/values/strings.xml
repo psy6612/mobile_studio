@@ -23,7 +23,7 @@
     <string name="minus">-</string>
     <string name="chart_name">심볼-마켓</string>
     <string name="to_market">거래소이동</string>
-    <string name="set_price_example">현재 기준가 : 153,400 KRW</string>
+    <string name="set_price_example">현재 기준가 : </string>
     <string name="target_desc_text">설정된 목표가 리스트</string>
     <string name="goal_hint_text">ex) +1.5</string>
     <string name="add_text">추가</string>
