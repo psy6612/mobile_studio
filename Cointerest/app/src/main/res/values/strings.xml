@@ -30,6 +30,7 @@
     <string name="edit_text">수정</string>
     <string name="delete_text">삭제</string>
     <string name="target_price_text_example">+1.5% 155,701 KRW</string>
+    <string name="firebase_web_client_id">533539994446-0e0pt5lsiajf3dk9h7ohc0bcthv6e5l2.apps.googleusercontent.com</string>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
