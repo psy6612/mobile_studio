@@ -40,6 +40,11 @@ class LoginActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
+        not_login.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         //로그인
         auth = FirebaseAuth.getInstance()
 

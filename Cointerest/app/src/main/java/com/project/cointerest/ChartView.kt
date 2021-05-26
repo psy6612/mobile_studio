@@ -38,7 +38,6 @@ class ChartView : AppCompatActivity() {
         setContentView(com.project.cointerest.R.layout.chart_view)
 
         var coinPrice : String =""
-        input_goal.text = null
 
         chart_webview.apply {
                 webViewClient = WebViewClient()
