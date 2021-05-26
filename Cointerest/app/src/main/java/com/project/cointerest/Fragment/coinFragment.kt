@@ -1,8 +1,10 @@
 package com.project.cointerest.Fragment
 
+import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.SystemClock
+import android.telephony.TelephonyManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +28,7 @@ import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+//import sun.rmi.runtime.Log
 import java.io.File
 import java.io.IOException
 import java.lang.Runnable
@@ -75,6 +78,24 @@ class coinFragment() : Fragment() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         coinDataModel =CoinDataModel()
+
+/*        val myUuid :String = ""
+
+        myUUID = GetDevicesUUID(getBaseContext())
+
+        fun GetUUID(context : Context){
+            var tManager : TelephonyManager
+
+        }
+
+        String useruuid = null;
+        useruuid = GetDevicesUUID(getBaseContext());
+
+        private String GetDevicesUUID(Context mContext) {
+            TelephonyManager tManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            String deviceId = tManager.getDeviceId();
+            return deviceId;
+        }*/
 
 
 
