@@ -15,7 +15,7 @@
     <item
         android:id="@+id/chatItem"
         android:icon="@drawable/chat_image"
-        android:title="채팅방" />
+        android:title="코인소식" />
     <item
         android:id="@+id/settingItem"
         android:icon="@drawable/setting_image"

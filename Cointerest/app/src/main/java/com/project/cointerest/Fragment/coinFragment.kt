@@ -79,26 +79,6 @@ class coinFragment() : Fragment() {
 
         coinDataModel =CoinDataModel()
 
-/*        val myUuid :String = ""
-
-        myUUID = GetDevicesUUID(getBaseContext())
-
-        fun GetUUID(context : Context){
-            var tManager : TelephonyManager
-
-        }
-
-        String useruuid = null;
-        useruuid = GetDevicesUUID(getBaseContext());
-
-        private String GetDevicesUUID(Context mContext) {
-            TelephonyManager tManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            String deviceId = tManager.getDeviceId();
-            return deviceId;
-        }*/
-
-
-
         DataAdd()
         coinDataModel.newPriceSet(selectedList, itemPositionList)
         Log.d("싸이즈","${selectedList.size}")

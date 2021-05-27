@@ -12,12 +12,10 @@ import android.util.Log
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.chart_view.*
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONException
-import org.json.JSONObject
 import java.io.IOException
 import java.math.BigDecimal
 import java.net.URL
@@ -39,7 +37,7 @@ class ChartView : AppCompatActivity() {
 
         var coinPrice : String =""
 
-        chart_webview.apply {
+        chart_view.apply {
                 webViewClient = WebViewClient()
                 settings.javaScriptEnabled = true
         }
@@ -51,7 +49,7 @@ class ChartView : AppCompatActivity() {
         callPrice(arr[1], arr[0])
         //arr[1]
 
-        chart_webview.loadUrl("http://54.180.134.53/chart.php?coin=${arr[0]}${arr[1]}")
+        chart_view.loadUrl("http://54.180.134.53/chart.php?coin=${arr[0]}${arr[1]}")
 
         back_btn.setOnClickListener {
             finishAndRemoveTask()
@@ -91,7 +89,7 @@ class ChartView : AppCompatActivity() {
             //Todo DB로 uuid랑 목표 가격, 기준가격, 심볼-마켓 보내기
             uuid =Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
 
-            if(input_goal.text.toString().isEmpty()){
+            if(input_goal.text.toString().isEmpty() ||input_goal.text.toString() == "." ){
                 Toast.makeText(this, "퍼센테이지를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
             else{
@@ -103,8 +101,7 @@ class ChartView : AppCompatActivity() {
 
         set_price_btn.setOnClickListener {
             callPrice(arr[1], arr[0])
-
-            Toast.makeText(this, "${input_goal.text}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "기준가가 갱신되었습니다.", Toast.LENGTH_SHORT).show()
 
         }
     }
@@ -183,31 +180,6 @@ class ChartView : AppCompatActivity() {
         return
     }
 
-//    fun test() {
-//        fun onResponse(response: String?) {
-//            try {
-//                val jsonObject = JSONObject(response)
-//                val success = jsonObject.getBoolean("success")
-//                if (success) { //로그인 성공시
-//                    val UserEmail = jsonObject.getString("UserEmail")
-//                    val UserPwd = jsonObject.getString("UserPwd")
-//                    val UserName = jsonObject.getString("UserName")
-//
-//                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-//                    intent.putExtra("UserEmail", UserEmail)
-//                    intent.putExtra("UserPwd", UserPwd)
-//                    intent.putExtra("UserName", UserName)
-//                    ContextCompat.startActivity(intent)
-//                } else { //로그인 실패시
-//                    Toast.makeText(ApplicationProvider.getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
-//            } catch (e: JSONException) {
-//                e.printStackTrace()
-//            }
-//        }
-//    }
-
     fun send(){
 
         // URL을 만들어 주고
@@ -219,6 +191,7 @@ class ChartView : AppCompatActivity() {
                 .add("price_range", "${sign}${input_goal.text}")
                 .add("market",arr[1])
                 .add("symbol",arr[0])
+                .add("coin","${arr[1]}${arr[0]}")
                 .add("current_price", currentPrice)
                 .build()
 
@@ -237,6 +210,7 @@ class ChartView : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback{
             override fun onResponse(call: Call, response: Response) {
                 Log.d("요청","요청 완료")
+                input_goal.text = null
             }
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("요청","요청 실패 ")

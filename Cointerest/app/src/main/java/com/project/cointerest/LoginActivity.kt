@@ -13,6 +13,7 @@ import com.project.cointerest.*
 import kotlinx.android.synthetic.main.activity_login.*
 import android.view.*
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.android.synthetic.main.*
 import kotlinx.android.synthetic.main.fragment_signup.*
 
@@ -33,6 +34,7 @@ class LoginActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         //회원가입 버튼
         sign_up.setOnClickListener{

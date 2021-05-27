@@ -27,6 +27,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.chart_view.*
 import kotlinx.android.synthetic.main.fragment_signup.*
@@ -42,6 +43,7 @@ class CreateAccountActivity : AppCompatActivity() {
         setContentView(R.layout.fragment_signup)
 
         auth = FirebaseAuth.getInstance()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         //사용자가 입력한 값들
 //        var email: String = et_email.text.toString()

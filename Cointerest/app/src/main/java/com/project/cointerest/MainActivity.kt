@@ -5,6 +5,7 @@ package com.project.cointerest
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        //FirebaseMessaging.getInstance().subscribeToTopic("test")
+        FirebaseMessaging.getInstance().subscribeToTopic("${Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)}")
 
         setContentView(R.layout.activity_main)
         tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
@@ -73,6 +74,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         var gapTime : Long = curTime -backBtn
         if(gapTime >= 0 && gapTime <= 2000){
             super.onBackPressed()
+            finish()
         }
         else{
             backBtn = curTime
