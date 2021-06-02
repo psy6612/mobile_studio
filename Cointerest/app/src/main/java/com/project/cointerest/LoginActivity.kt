@@ -2,6 +2,7 @@ package com.project.cointerest
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,9 @@ import kotlinx.android.synthetic.main.activity_login.*
 import android.view.*
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import kotlinx.android.synthetic.main.*
 import kotlinx.android.synthetic.main.fragment_signup.*
 
@@ -35,6 +39,26 @@ class LoginActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+//        FirebaseMessaging.getInstance().subscribeToTopic("${Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)}")
+//        FirebaseMessagingeInstanceId.getInstance().getToken()
+//        var getToken = FirebaseMessaging.getInstance().getToken()
+//        Log.d("토큰!!", "${getToken}")
+        var token : String
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val registToken = task.result
+            token = registToken.toString()
+            App.prefs.setString("token",token)
+
+            Log.d("토큰메세지", token.toString())
+        })
+
 
         //회원가입 버튼
         sign_up.setOnClickListener{

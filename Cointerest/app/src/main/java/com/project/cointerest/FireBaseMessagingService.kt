@@ -15,6 +15,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
     private val TAG = "MyFirebaseMsgService"
 
     override fun onNewToken(p0: String) {
+        Log.d("토큰","onNewToken: $p0")
         super.onNewToken(p0)
     }
 

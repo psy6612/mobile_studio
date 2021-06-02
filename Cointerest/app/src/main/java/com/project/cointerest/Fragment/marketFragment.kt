@@ -21,7 +21,6 @@ class marketFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        FirebaseMessaging.getInstance().subscribeToTopic("test")
         return inflater.inflate(R.layout.fragment_market, container, false)
     }
 

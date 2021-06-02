@@ -28,6 +28,9 @@ class ChartView : AppCompatActivity() {
     var sign : String = "+"
     var uuid : String = ""
     var str : String? = ""
+
+    var tokenStr = App.prefs.getString("token", "nothing")
+
     lateinit var arr : List<String>
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -81,8 +84,8 @@ class ChartView : AppCompatActivity() {
             Toast.makeText(this, "${sign}", Toast.LENGTH_SHORT).show()
         }
         plus_minus_btn.setOnClickListener {
-            sign = "±"
-            Toast.makeText(this, "${sign}", Toast.LENGTH_SHORT).show()
+            sign = "*"
+            Toast.makeText(this, "±", Toast.LENGTH_SHORT).show()
         }
 
         goal_btn.setOnClickListener {
@@ -134,7 +137,6 @@ class ChartView : AppCompatActivity() {
         }
     }
 
-
     fun callPrice(market: String, symbol: String) {
 
 
@@ -160,6 +162,7 @@ class ChartView : AppCompatActivity() {
                     currentPrice = pcr
                     runOnUiThread(Runnable {
                         set_price_btn.text = "현재 기준가 : ${pcr} ${market}"
+                        Log.d("현재기준가",currentPrice)
                     })
 
                 } catch (e: JSONException) {
@@ -184,7 +187,6 @@ class ChartView : AppCompatActivity() {
 
         // URL을 만들어 주고
         val url = URL("http://54.180.134.53/data_send.php")
-
         //데이터를 담아 보낼 바디를 만든다
         val requestBody : RequestBody = FormBody.Builder()
                 .add("uuid",uuid)
@@ -193,6 +195,7 @@ class ChartView : AppCompatActivity() {
                 .add("symbol",arr[0])
                 .add("coin","${arr[1]}${arr[0]}")
                 .add("current_price", currentPrice)
+                .add("token", tokenStr)
                 .build()
 
         // OkHttp Request 를 만들어준다.

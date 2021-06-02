@@ -20,6 +20,7 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.chart_view.*
 
@@ -31,7 +32,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        FirebaseMessaging.getInstance().subscribeToTopic("${Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)}")
+
+        //var test = FireBaseMessagingService
+
+//        FirebaseMessaging.getInstance().subscribeToTopic("${Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)}")
+        FirebaseMessaging.getInstance().subscribeToTopic("gogo")
+
 
         setContentView(R.layout.activity_main)
         tl_ac_main_bottom_menu.setOnNavigationItemSelectedListener(this)
