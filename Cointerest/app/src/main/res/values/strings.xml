@@ -21,6 +21,7 @@
     <string name="back">뒤로가기</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
+    <string name="plus_minus">±</string>
     <string name="chart_name">심볼-마켓</string>
     <string name="to_market">거래소이동</string>
     <string name="set_price_example">현재 기준가 : </string>

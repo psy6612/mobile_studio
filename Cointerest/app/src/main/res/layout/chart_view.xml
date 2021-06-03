@@ -78,8 +78,9 @@
 
             <LinearLayout
                 android:id="@+id/target_button_layout"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -90,7 +91,7 @@
                     android:id="@+id/goal_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="0dp"
                     android:text="@string/add_text" />
 
                 <Button
@@ -165,6 +166,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:autofillHints="" />
 
+            <TextView
+                android:id="@+id/percentage_sign"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="%"
+                android:textSize="32sp"
+                app:layout_constraintBaseline_toBaselineOf="@id/input_goal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/input_goal" />
+
             <EditText
                 android:id="@+id/input_goal"
                 android:layout_width="0dp"
@@ -175,7 +186,7 @@
                 android:ems="10"
                 android:hint="@string/goal_hint_text"
                 android:inputType="numberDecimal"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
                 android:textColorHint="#00000000"
                 android:textSize="24sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/minus_btn"
@@ -189,12 +200,12 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/gray_500"
+                android:text="@string/plus_minus"
                 android:textSize="24sp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toStartOf="@+id/plus_btn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/set_price_btn"
-                tools:text="±"
                 tools:visibility="visible" />
 
             <Button
@@ -202,7 +213,7 @@
                 android:layout_width="45dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="11dp"
-                android:backgroundTint="@color/gray_500"
+                android:backgroundTint="@color/gray_900"
                 android:text="@string/plus"
                 android:textSize="24sp"
                 android:visibility="visible"
