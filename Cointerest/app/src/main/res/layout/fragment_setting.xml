@@ -26,22 +26,6 @@
             tools:layout_editor_absoluteY="12dp">
 
             <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/notice_alarm_switch"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginStart="12dp"
-                android:layout_weight="0.2"
-                android:checked="false"
-                android:fontFamily="@font/notosanskrmedium"
-                android:freezesText="false"
-                android:includeFontPadding="true"
-                android:text="\t\t공지사항 알람받기"
-                android:textAllCaps="false"
-                android:textColorHighlight="#009688"
-                android:textIsSelectable="false"
-                app:showText="false" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/target_alarm_switch"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -93,25 +77,6 @@
                     android:textAllCaps="false"
                     android:textColor="@color/black" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/alarm_market_select"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginStart="12dp"
-                android:layout_weight="0.2">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/notosanskrmedium"
-                    android:freezesText="false"
-                    android:gravity="center_vertical"
-                    android:text="\t\t공지사항 알림 받을 거래소"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    android:textColorHighlight="#009688" />
             </LinearLayout>
 
             <Space
