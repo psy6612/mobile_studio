@@ -23,8 +23,6 @@ import kotlinx.android.synthetic.main.fragment_signup.*
 
 
 class LoginActivity : AppCompatActivity(){
-
-
     //firebase Auth
     private lateinit var auth: FirebaseAuth
     //google client

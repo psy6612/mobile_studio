@@ -48,6 +48,7 @@ dependencies {
     //live data
     def lifecycle_version = "2.2.0"
 
+
     // ViewModel & LiveData
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"

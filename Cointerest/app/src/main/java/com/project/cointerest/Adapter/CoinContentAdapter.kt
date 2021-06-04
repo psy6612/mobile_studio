@@ -2,6 +2,7 @@ package com.project.cointerest.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -15,16 +16,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
-import com.project.cointerest.ChartView
-import com.project.cointerest.CoinInfo
-import com.project.cointerest.DiffCallback
-import com.project.cointerest.R
+import com.project.cointerest.*
+import com.scichart.core.utility.Dispatcher.runOnUiThread
+import kotlinx.android.synthetic.main.chart_view.*
 import kotlinx.android.synthetic.main.coin_row_item.view.*
 import kotlinx.android.synthetic.main.fragment_coin.*
 import kotlinx.android.synthetic.main.fragment_coin.view.*
+import kotlinx.coroutines.selects.select
 import okhttp3.*
+import java.io.IOException
 import java.net.URL
 import java.util.*
 import kotlin.math.pow
@@ -102,23 +106,62 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
         position: Int
         ) {
 
-/*        if(payloads.isNotEmpty()){
-            var priceView = holder.itemView.coin_row_item_price
-            val textHolder: Holder = holder as Holder
-           // textHolder.Price_str
-            Log.d("가격변동체크Adapter","${payloads.toString()}")
-//            priceView.setText(coin.price)
+        var image_task: URLtoBitmapTask = URLtoBitmapTask()
+        image_task = URLtoBitmapTask().apply {
+            url = URL("https://static.upbit.com/logos/${selected[position].symbol}.png")
+        }
+        var bitmap: Bitmap = image_task.execute().get()
 
+        holder.itemView.coin_row_item_layout.setOnLongClickListener {
 
-        }*/
+            var builder = AlertDialog.Builder(context)
+            builder.setTitle("${selected[position].symbol}-${selected[position].market}")
+            builder.setMessage("관심 코인을 삭제하시겠습니까?")
 
-        holder.itemView.coin_row_item_layout.setOnClickListener {
-            Toast.makeText(context, "레이아웃 클릭 체크", Toast.LENGTH_SHORT).show();
-            //val drawer :SlidingDrawer = (SlidingDrawer).findViewById(R.id.slide)
-            //drawer.animateClose()
-            var chart_mini = holder.itemView.mini_chart
-            chart_mini.visibility=View.VISIBLE
+            builder.setIcon(R.drawable.main_icon)
 
+            var listener = object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    val url = URL("http://54.180.134.53/data_delete.php")
+                    var tokenStr = App.prefs.getString("token", "nothing")
+
+                    val requestBody: RequestBody = FormBody.Builder()
+                        .add("token", tokenStr)
+                        .add("coin", "${selected[position].market}${selected[position].symbol}")
+                        .build()
+                    val request = Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build()
+
+                    val client = OkHttpClient()
+
+                    client.newCall(request).enqueue(object : Callback {
+                        override fun onResponse(call: Call, response: Response) {
+                            Log.d("요청", "요청 완료")
+                        }
+
+                        override fun onFailure(call: Call, e: IOException) {
+                            Log.d("요청", "요청 실패 ")
+                        }
+                    })
+
+                    App.prefs.setString(
+                        "${selected[position].symbol}-${selected[position].market}",
+                        "nothing"
+                    )
+                    //var check = App.prefs.getString("${selected[position].symbol}-${selected[position].market}","nothing")
+                    //Toast.makeText(context, "${check}", Toast.LENGTH_SHORT).show()
+                    selected.removeAt(position)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, selected.size)
+                }
+            }
+
+            builder.setPositiveButton("삭제", listener)
+            builder.setNegativeButton("취소",null)
+            builder.show()
+            true
         }
 
         holder.itemView.coin_row_item_price.addTextChangedListener(object : TextWatcher {
@@ -181,19 +224,26 @@ class CoinContentAdapter(val context: Context, var selected: ArrayList<CoinInfo>
             }
         })
 
-//        holder.bind(getItem(position),context)
         holder?.bind(selected[position], context)
 
-/*        holder.itemView.setOnClickListener {
-
-        }*/
     }
 
-/*    override fun onBindViewHolder(holder: Holder, position: Int) {
-        TODO("Not yet implemented")
-    }*/
+    fun removeData(position: Int) {
+        selected.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
+    // 두 개의 뷰홀더 포지션을 받아 Collections.swap으로 첫번째 위치와 두번째 위치의 데이터를 교환
+    fun swapData(fromPos: Int, toPos: Int) {
+        Collections.swap(selected, fromPos, toPos)
+        notifyItemMoved(fromPos, toPos)
+    }
 
+    // 선택한 뷰홀더 포지션의 데이터 내용을 바꾸도록 함
+    fun setData(position: Int) {
+        //selected[position] = listOf("main viewholder touched!", "sub viewholder touched!")
+        notifyItemChanged(position)
+    }
 }
 
 

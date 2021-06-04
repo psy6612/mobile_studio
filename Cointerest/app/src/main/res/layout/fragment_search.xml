@@ -104,7 +104,8 @@
             android:id="@+id/search_cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel"
+            android:text="선택해제"
+            android:visibility="visible"
             app:layout_constraintBaseline_toBaselineOf="@id/search_add_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/search_add_button" />

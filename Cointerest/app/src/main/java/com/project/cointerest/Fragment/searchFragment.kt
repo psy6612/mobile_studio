@@ -135,10 +135,7 @@ class searchFragment : Fragment() {
 
 
         search_cancel_button.setOnClickListener {
-            println("취소버튼 클릭")
-
-
-            App.prefs.deleteAll() //데이터 삭제하려고 임시로 만듬
+            //App.prefs.deleteAll() //데이터 삭제하려고 임시로 만듬
 
             when (state) {
                 "KRW" -> {

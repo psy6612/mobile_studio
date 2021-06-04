@@ -39,13 +39,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.timer
 
-
-//Todo isRunning말고 LifecycleOwner로
-
-//Todo 그리고 newPriceSet, DataAdd이거는 모델 따로 만들기
-
-//Todo 시세 알람용 수신 코드는 서버 따로 만들어서 거기서 구현(웹소켓)
-
 class coinFragment() : Fragment() {
     var itemPositionList = mutableSetOf<Int>() // 바뀐 가격 저장 SET
     lateinit var my_recyclerView: RecyclerView
@@ -55,6 +48,8 @@ class coinFragment() : Fragment() {
 
     var runCheck =0 //같은 코인의 타이머 중복동작 방지
     var timerCheck = 0 // 타이머를 정지하기위한 변수
+
+    var sec = 0
 
     private var isRunning=true
 
@@ -98,11 +93,11 @@ class coinFragment() : Fragment() {
         override fun run(){
             while(isRunning){
                 try {
-
                     coinDataModel.newPriceSet(selectedList, itemPositionList)
                     if (itemPositionList.isNotEmpty()) {
                         Log.d("itemPositionList2", "${itemPositionList.size}")
                         runOnUiThread {
+
                             for (changePosition in itemPositionList) {
                                 Log.d("가격변동체크", "${changePosition}번째 변동됨")
 
@@ -149,16 +144,9 @@ class coinFragment() : Fragment() {
         super.onPause()
         timerCheck = 1
         runCheck = 0
-
-        //isRunning = false
+        isRunning = false
     }
 
-    //ToDo 메인에서 시세 보여주는거는 타이머로 쓰고 목표가 도달해서 알람하는건 WorkManager 또는 서버에서 처리하도록 구현
-    //Todo App쪽에 Firebase랑 호환되기 어렵다.
-    //Todo RelationLayout형식으로 바꾸기
-    //Todo 업비트 차트 구현
-    //Todo 목표가 설정
-    
     fun DataAdd() {
                 // selectedList.clear()
         println("데어터를 가져 오는 중...")

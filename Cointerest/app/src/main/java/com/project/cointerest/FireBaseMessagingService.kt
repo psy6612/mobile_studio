@@ -55,6 +55,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
+
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

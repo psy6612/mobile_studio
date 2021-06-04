@@ -59,14 +59,15 @@
         android:id="@+id/googleSignInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인"
-        android:ems="17"
-        android:drawableLeft="@drawable/google_icon"
+        android:layout_marginBottom="88dp"
         android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:drawableLeft="@drawable/google_icon"
+        android:ems="17"
+        android:text="  로그인        "
+        android:textIsSelectable="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="90dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/sign_up"
