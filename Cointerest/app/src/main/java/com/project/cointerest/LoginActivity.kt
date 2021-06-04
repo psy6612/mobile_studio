@@ -38,10 +38,13 @@ class LoginActivity : AppCompatActivity(){
         setContentView(R.layout.activity_login)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-//        FirebaseMessaging.getInstance().subscribeToTopic("${Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)}")
-//        FirebaseMessagingeInstanceId.getInstance().getToken()
-//        var getToken = FirebaseMessaging.getInstance().getToken()
-//        Log.d("토큰!!", "${getToken}")
+        App.prefs.setString("uuid",Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID))
+
+        if(App.prefs.getString("notice", "nothing") =="nothing"){
+            App.prefs.setString("notice","TRUE")
+        }
+
+
         var token : String
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {

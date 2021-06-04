@@ -75,9 +75,9 @@ class ChartView : AppCompatActivity() {
         val spinner: Spinner = findViewById(R.id.target_spinner)
 
         get_target_data()
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+      /*  if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             updatePriceRangeText(null)
-        }
+        }*/
 
 
         spinner.onItemSelectedListener = object : OnItemSelectedListener {
@@ -123,7 +123,7 @@ class ChartView : AppCompatActivity() {
             }
 
             @RequiresApi(Build.VERSION_CODES.N)
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 updatePriceRangeText(s)
             }
         })
@@ -231,7 +231,7 @@ class ChartView : AppCompatActivity() {
         }
     }
     @RequiresApi(Build.VERSION_CODES.N)
-    fun updatePriceRangeText(s:CharSequence?){
+    fun updatePriceRangeText(s:CharSequence){
         if (!s.isNullOrEmpty()) {
             val percentage: Double? = s.toString().toDoubleOrNull()
             val priceDouble: Double? = currentPrice.toDoubleOrNull()
@@ -340,6 +340,7 @@ class ChartView : AppCompatActivity() {
             .add("coin", "${arr[1]}${arr[0]}")
             .add("current_price", currentPrice)
             .add("token", tokenStr)
+            .add("notice", App.prefs.getString("notice", "nothing"))
             .build()
 
         // OkHttp Request 를 만들어준다.
