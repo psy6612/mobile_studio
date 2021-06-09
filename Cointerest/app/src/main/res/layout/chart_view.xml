@@ -236,13 +236,15 @@
 
             <TextView
                 android:id="@+id/target_price_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/notosanskrbold"
+                android:gravity="center"
                 android:text="@string/target_price_text_example"
                 android:textColor="@color/teal_700"
+                app:autoSizeMaxTextSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/target_button_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

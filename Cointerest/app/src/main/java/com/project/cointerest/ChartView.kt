@@ -5,6 +5,7 @@ package com.project.cointerest
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.icu.text.NumberFormat
 import android.net.Uri
 import android.os.Build
@@ -14,6 +15,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.webkit.WebViewClient
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -24,7 +26,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
 import kotlinx.android.synthetic.main.chart_view.*
 import okhttp3.*
 import org.json.JSONArray
@@ -55,6 +56,7 @@ class ChartView : AppCompatActivity() {
         var coinPrice : String =""
         uuid =Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
 
+        // 웹뷰 불러오기
         chart_view.apply {
             webViewClient = WebViewClient()
             settings.javaScriptEnabled = true
@@ -68,24 +70,41 @@ class ChartView : AppCompatActivity() {
         //arr[1]
 
         chart_view.loadUrl("http://54.180.134.53/chart.php?coin=${arr[0]}${arr[1]}")
+        
+        
+        // 텍스트 초기화
+        runOnUiThread(Runnable {
+            target_price_text.text = ""
+        })
+
+        // 키보드 올라오면 버튼 안보이게 하기
+        var rootView = window.decorView.rootView
+        rootView.viewTreeObserver.addOnGlobalLayoutListener(OnGlobalLayoutListener {
+            val rect = Rect()
+            rootView.getWindowVisibleDisplayFrame(rect)
+            val screenHeight: Int = rootView.height
+            val keyboardHeight: Int = screenHeight - (rect.bottom - rect.top)
+            if (keyboardHeight > screenHeight / 3) {
+                goal_btn.isVisible = false
+                delete_text.isVisible = false
+            } else {
+                goal_btn.isVisible = true
+                delete_text.isVisible = true
+            }
+        })
 
 
-
-
+        // 스피너 세팅
         val spinner: Spinner = findViewById(R.id.target_spinner)
 
         get_target_data()
-      /*  if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            updatePriceRangeText(null)
-        }*/
-
 
         spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                position: Int,
-                id: Long
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
             ) {
                 selectedPrice = parent?.getItemAtPosition(position) as String
                 delete_text.isVisible = selectedPrice != "현재가"
@@ -115,6 +134,7 @@ class ChartView : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
+        // 퍼센트 인풋
         input_goal.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -128,14 +148,18 @@ class ChartView : AppCompatActivity() {
             }
         })
 
+        // 삭제 버튼
         delete_text.setOnClickListener{
             delete_target_data()
             Toast.makeText(this, "목표가가 삭제되었습니다", Toast.LENGTH_SHORT).show()
         }
 
+        // 뒤로가기 버튼
         back_btn.setOnClickListener {
             finishAndRemoveTask()
         }
+
+        // 거래소 가기 버튼
         trade_btn.setOnClickListener {
             var isMarket :Boolean?
 
@@ -153,6 +177,7 @@ class ChartView : AppCompatActivity() {
             }
         }
 
+        // + 기호 버튼
         plus_btn.setOnClickListener {
             sign = "+"
             plus_btn.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_900))
@@ -164,6 +189,7 @@ class ChartView : AppCompatActivity() {
             }
         }
 
+        // - 기호 버튼
         minus_btn.setOnClickListener {
             sign = "-"
             plus_btn.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_500))
@@ -174,6 +200,9 @@ class ChartView : AppCompatActivity() {
                 updatePriceRangeText(input_goal.text.toString())
             }
         }
+
+
+        // +- 기호 버튼
         plus_minus_btn.setOnClickListener {
             sign = "*"
             plus_btn.setBackgroundColor(ContextCompat.getColor(this, R.color.gray_500))
@@ -185,6 +214,7 @@ class ChartView : AppCompatActivity() {
             }
         }
 
+        // 추가 버튼
         goal_btn.setOnClickListener {
             //Todo DB로 uuid랑 목표 가격, 기준가격, 심볼-마켓 보내기
             if(input_goal.text.toString().isEmpty() ||input_goal.text.toString() == "." ){
@@ -196,6 +226,7 @@ class ChartView : AppCompatActivity() {
             }
         }
 
+        // 현재 기준가 버튼
         set_price_btn.setOnClickListener {
             callPrice(arr[1], arr[0])
             Toast.makeText(this, "기준가가 갱신되었습니다.", Toast.LENGTH_SHORT).show()
@@ -230,8 +261,10 @@ class ChartView : AppCompatActivity() {
             false
         }
     }
+
+    // 퍼센티지에 따라 가격 계산해주는 함수
     @RequiresApi(Build.VERSION_CODES.N)
-    fun updatePriceRangeText(s:CharSequence){
+    fun updatePriceRangeText(s: CharSequence){
         if (!s.isNullOrEmpty()) {
             val percentage: Double? = s.toString().toDoubleOrNull()
             val priceDouble: Double? = currentPrice.toDoubleOrNull()
@@ -243,30 +276,34 @@ class ChartView : AppCompatActivity() {
             when (sign) {
                 "+" -> {
                     val priceRange: Double =
-                        priceDouble?.times(((100.0 + percentage!!) / 100.0)) ?: 0.0
+                            priceDouble?.times(((100.0 + percentage!!) / 100.0)) ?: 0.0
                     var printText =
-                        "+" + s.toString() + "% " + (nf?.format(priceRange) ?: priceRange.toString()) + " " + arr[1]
+                            "+" + s.toString() + "% " + (nf?.format(priceRange)
+                                    ?: priceRange.toString()) + " " + arr[1]
                     runOnUiThread(Runnable {
                         target_price_text.text = printText
                     })
                 }
                 "-" -> {
                     val priceRange: Double =
-                        priceDouble?.times(((100.0 - percentage!!) / 100.0)) ?: 0.0
+                            priceDouble?.times(((100.0 - percentage!!) / 100.0)) ?: 0.0
                     var printText =
-                        "-" + s.toString() + "% " + (nf?.format(priceRange) ?: priceRange.toString()) + " " + arr[1]
+                            "-" + s.toString() + "% " + (nf?.format(priceRange)
+                                    ?: priceRange.toString()) + " " + arr[1]
                     runOnUiThread(Runnable {
                         target_price_text.text = printText
                     })
                 }
                 "*" -> {
                     val plusPriceRange: Double =
-                        priceDouble?.times(((100.0 + percentage!!) / 100.0)) ?: 0.0
+                            priceDouble?.times(((100.0 + percentage!!) / 100.0)) ?: 0.0
                     val minusPriceRange: Double =
-                        priceDouble?.times(((100.0 - percentage!!) / 100.0)) ?: 0.0
+                            priceDouble?.times(((100.0 - percentage!!) / 100.0)) ?: 0.0
                     var printText =
-                        "+" + s.toString() + "% " + (nf?.format(plusPriceRange) ?: plusPriceRange.toString()) + " " + arr[1]
-                    printText += "\n-" + s.toString() + "% " + (nf?.format(minusPriceRange) ?: minusPriceRange.toString()) + " " + arr[1]
+                            "+" + s.toString() + "% " + (nf?.format(plusPriceRange)
+                                    ?: plusPriceRange.toString()) + " " + arr[1]
+                    printText += " & -" + s.toString() + "% " + (nf?.format(minusPriceRange)
+                            ?: minusPriceRange.toString()) + " " + arr[1]
                     runOnUiThread(Runnable {
                         target_price_text.text = printText
                     })
@@ -280,9 +317,8 @@ class ChartView : AppCompatActivity() {
         }
     }
 
+    // 현재 가격 호출
     fun callPrice(market: String, symbol: String) {
-
-
         println("데어터를 가져 오는 중...")
         //val url = "http://3.35.174.63/market.php"
         val url = "https://api.upbit.com/v1/ticker?markets=${market}-${symbol}"
@@ -327,8 +363,8 @@ class ChartView : AppCompatActivity() {
         return
     }
 
+    // 기준가 전송
     fun send(){
-
         // URL을 만들어 주고
         val url = URL("http://54.180.134.53/data_send.php")
         //데이터를 담아 보낼 바디를 만든다
@@ -370,12 +406,13 @@ class ChartView : AppCompatActivity() {
         })
     }
 
+    // 기준가 받기
     fun get_target_data(){
         val spinner: Spinner = findViewById(R.id.target_spinner)
         spinnerAdapter = ArrayAdapter<String>(
-            this,
-            android.R.layout.simple_spinner_item,
-            android.R.id.text1
+                this,
+                android.R.layout.simple_spinner_item,
+                android.R.id.text1
         )
         // URL을 만들어 주고
         val url = URL("http://54.180.134.53/get_target_data.php")
@@ -439,6 +476,7 @@ class ChartView : AppCompatActivity() {
         })
     }
 
+    // 기준가 삭제
     fun delete_target_data(){
         // URL을 만들어 주고
         val url = URL("http://54.180.134.53/delete_target_data.php")
@@ -481,4 +519,5 @@ class ChartView : AppCompatActivity() {
 
         })
     }
+
 }

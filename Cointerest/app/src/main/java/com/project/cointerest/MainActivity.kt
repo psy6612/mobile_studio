@@ -17,9 +17,11 @@ import com.project.cointerest.Fragment.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.widget.RelativeLayout
 import android.view.View
+import android.view.ViewTreeObserver
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.google.android.material.internal.ViewUtils
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.chart_view.*
